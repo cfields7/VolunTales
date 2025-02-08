@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const DB_FILE = "/data/test.db";
+const DB_FILE = "./data/test.db";
 
 // Sqlite 3 Database
 let db;
@@ -23,8 +23,12 @@ const init = () => {
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT,
+      password TEXT,
       firstName TEXT,
-      lastName TEXT
+      lastName TEXT,
+      admin BOOLEAN,
+      email TEXT
     )
   `, (err) => {
     if (err) {
@@ -39,20 +43,22 @@ const init = () => {
 const addUser = (userData) => {
   console.log("Adding user with data ", userData);
   return new Promise((resolve, reject) => {
-    const { firstName, lastName } = userData;
-    db.run(
-      "INSERT INTO users (firstName, lastName) VALUES (?, ?)",
-      [firstName, lastName],
-      function(err) {
-        if (err) {
-          console.error('Error inserting user: ', err);
-          reject(err);
-        } else {
-          const updatedUserData = getUser(this.lastID);
-          resolve(updatedUserData);
+    const { username, password, firstName, lastName, admin, email } = userData;
+    if (username && password && firstName && lastName && admin) {
+      db.run(
+        "INSERT INTO users (username, password, firstName, lastName, admin, email) VALUES (?, ?, ?, ?, ?, ?)",
+        [username, password, firstName, lastName, admin, email],
+        function(err) {
+          if (err) {
+            console.error('Error inserting user: ', err);
+            reject(err);
+          } else {
+            const updatedUserData = getUser(this.lastID);
+            resolve(updatedUserData);
+          }
         }
-      }
-    );
+      );
+    }
   });
 };
 
