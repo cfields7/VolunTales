@@ -2,15 +2,16 @@
 import { useState, useEffect } from 'react';
 import { userService } from './services/userService';
 import { useRouter } from 'next/navigation';
+import Header from './components/header';
+import { User, UserPlus } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const router = useRouter();
   const [users, setUsers] = useState(null);
 
-  const doGet = async () => {
-    userService.getUsers().then(users => {
-      setUsers(users);
-    });
+  const doLogin = async () => {
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -19,43 +20,54 @@ export default function Home() {
     });
   }, []);
 
-  const handlePost = () => {
-    router.push('/post');
+  const handleRegister = () => {
+    router.push('/register');
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">API Tester</h1>
+    <div> 
+      {/* <Header /> */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+         <br />
+         <br />
+         <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="max-w-2xl mx-auto space-y-6"
+        >
 
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">GET Request</h2>
-            <button
-              onClick={doGet}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors"
-            >
-              Fetch Data
-            </button>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-md">
-            <pre className="overflow-auto max-h-96 text-sm text-gray-600">
-              {JSON.stringify(users)}
-            </pre>
-          </div>
+        {/* Logo */}
+        <div className="flex justify-center items-center mt-20 mb-8">
+          <img 
+            src="/logo.png" 
+            alt="App Logo" 
+            className="h-41 object-contain py-8"
+          />
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">POST Request/Routing Test</h2>
-            <button
-              onClick={handlePost}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors"
-            >
-              Go to Post Form
-            </button>
-          </div>
-        </div>
+        <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-full bg-gradient-to-b from-purple-500 to-purple-800 text-white p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-purple-600 hover:to-purple-900 transition-all"
+        onClick={() => {
+            doLogin();
+          }}
+      >
+        <User className="w-6 h-6" />
+        <span className="text-lg font-semibold">Login</span>
+      </motion.button>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-full bg-gradient-to-b from-green-500 to-green-800 text-white p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-green-600 hover:to-green-800 transition-all"
+        onClick={() => handleRegister()}
+      >
+        <UserPlus className="w-6 h-6" />
+        <span className="text-lg font-semibold">Register</span>
+      </motion.button>
+
+      </motion.div>
       </div>
     </div>
   );

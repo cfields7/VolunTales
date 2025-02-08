@@ -1,11 +1,17 @@
-
+"use client";
+import Header from '../components/header';
 
 export default function Volunteer() {
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div>
+    <Header />
+    
+  <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+       <br />
+       <br />
       <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Welcome Volunteers!</h1>
+        <h1 className="text-3xl font-bold text-white-800 mb-8">Welcome Volunteers!</h1>
 
         <div>
           <p>How would you like to volunteer?</p>
@@ -41,6 +47,7 @@ export default function Volunteer() {
         </div>
         
       </div>
+    </div>
     </div>
   );
 
