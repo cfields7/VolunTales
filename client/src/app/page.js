@@ -1,23 +1,20 @@
 "use client";
 import { useState, useEffect } from 'react';
-const userService = require('./request');
-
+import { userService } from './services/userService';
 
 export default function Home() {
-  const [responseGet, setResponseGet] = useState(null);
-  const [responsePost, setResponsePost] = useState(null);
+
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    setResponseGet(userService.fetchData());
+    userService.getUsers().then(users => {
+      setUsers(users);
+    });
   }, []);
 
   return (
     <div>
-      <h1>GET Response</h1>
-      <pre>{JSON.stringify(responseGet, 2)}</pre>
-
-      <h1>POST Response</h1>
-      <pre>{JSON.stringify(responsePost, 2)}</pre>
+      <p>{JSON.stringify(users)}</p>
     </div>
   );
 }
