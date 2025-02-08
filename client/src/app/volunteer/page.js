@@ -2,53 +2,70 @@
 import Header from '../components/header';
 
 export default function Volunteer() {
-
   return (
     <div>
-    <Header />
-    
-  <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
-       <br />
-       <br />
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold text-white-800 mb-8">Welcome Volunteers!</h1>
+      <Header />
+<br />
+<br />
+<br />
+      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <h1 className="text-4xl font-bold text-white text-center">Welcome Volunteers!</h1>
 
-        <div>
-          <p>How would you like to volunteer?</p>
+          {/* Main Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Left Section - Large */}
+            <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
+              <p className="text-lg mb-4 text-center">How would you like to volunteer?</p>
+              <h2 className="text-2xl font-semibold text-center mb-4">Everything Helps!</h2>
+              <p className="text-center">
+                No matter what your volunteering experience, skillset, or availability, WebsiteName can help you help others!
+                <br />
+                Choose one of the options on the right to get started.
+              </p>
+            </div>
 
-          <h2>Everything Helps!</h2>
+            {/* Right Section - Stacked smaller boxes */}
+            <div className="space-y-6">
+              <div className="bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+                {/* Volunteer Time Option */}
+                <div className="flex items-center space-x-4">
+                  {/* Placeholder icon */}
+                  <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Volunteer Your Time</h3>
+                    <p className="text-sm">Whether you want to...</p>
+                  </div>
+                </div>
+              </div>
 
-          <p>No matter what your volunteering experience, skillset, or availability, WebsiteName can help you help others!</p>
-          <p>Choose one of the options on the right to get started.</p>
+              <div className="bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+                {/* Financial Aid Option */}
+                <div className="flex items-center space-x-4">
+                  {/* Placeholder icon */}
+                  <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Provide Financial Aid</h3>
+                    <p className="text-sm">Donate money to the group or organization of your choice.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+                {/* Goods Donation Option */}
+                <div className="flex items-center space-x-4">
+                  {/* Placeholder icon */}
+                  <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">📦</div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Donate Goods</h3>
+                    <p className="text-sm">Search for specific items (dry goods, clothing, etc.) needed in your location.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div>
-          <div>
-            {/* icon */}
-            <div>
-              <h3>Volunteer Your Time</h3>
-              <p>Whether you want to</p>
-            </div>
-          </div>
-          <div>
-            {/* icon */}
-            <div>
-              <h3>Provide Financial Aid</h3>
-              <p>Donate Money to the group or organization of choice.</p>
-            </div>
-          </div>
-          <div>
-            {/* icon */}
-            <div>
-              <h3>Provide Financial Aid</h3>
-              <p>Donate Money to the group or organization of choice.</p>
-            </div>
-          </div>
-        </div>
-        
       </div>
     </div>
-    </div>
   );
-
 }
