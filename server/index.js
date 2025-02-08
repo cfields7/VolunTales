@@ -28,6 +28,8 @@ router.route('/users').post(async (req, res) => {
   }
 });
 
+// Login user
+
 // Get all users
 router.route('/users').get(async (req, res) => {
   try {
