@@ -20,6 +20,21 @@ export const userService = {
     });
 
     return Promise.resolve(res.json());
+  },
+
+  async loginUser(username, password) {
+    const res = await fetch(serverPath + '/login', {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    });
+
+    return Promise.resolve(res.json());
   }
 
 }

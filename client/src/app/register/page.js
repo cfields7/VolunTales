@@ -5,14 +5,14 @@ import { userService } from '../services/userService';
 
 export default function PostPage() {
   const router = useRouter();
-    const [responseGet, setResponseGet] = useState(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [admin, setAdmin] = useState(false);
-    const [isFormValid, setIsFormValid] = useState(false);
+  const [responseGet, setResponseGet] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Check if all required fields are filled
   useEffect(() => {
@@ -21,9 +21,13 @@ export default function PostPage() {
 
   const handleSubmit = () => {
     if (isFormValid) {
-      userService.addUser(firstName, lastName, username, password, admin, email);
-      setResponseGet("Post Success");
-      router.push('/volunteer');
+
+      userService.addUser(firstName, lastName, username, password, admin, email).then(users => { // change to look for success
+        setResponseGet("Post Success");
+        router.push('/volunteer'); // change later
+      });
+      
+
     }
   };
 
@@ -32,7 +36,7 @@ export default function PostPage() {
       <br />
       <br />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-white-800 mb-8">Create New User</h1>
+        <h1 className="text-3xl font-bold text-white-800 mb-8">Register A New Account</h1>
 
         <form onSubmit={handleSubmit} className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-lg shadow-md p-6 space-y-6">
           <div className="space-y-4">
