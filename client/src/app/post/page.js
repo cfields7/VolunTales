@@ -1,15 +1,19 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import {useState} from  'react';
+import { userService } from '../services/userService';
 
 export default function PostPage() {
   const router = useRouter();
     const [responseGet, setResponseGet] = useState(null);
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
   const handleSubmit = () => {
-    userService.addUser(lastName, firstName);
+    if (lastName && firstName) {
+        userService.addUser(lastName, firstName);
+        setResponseGet("Post Success")
+    }
   };
 
   return (
@@ -20,7 +24,7 @@ export default function PostPage() {
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+              <label className="block text-sm font-medium text-gray-900 mb-1">First Name</label>
               <input
                 type="text"
                 value={lastName}
@@ -31,7 +35,7 @@ export default function PostPage() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+              <label className="block text-sm font-medium text-gray-900 mb-1">Last Name</label>
               <input
                 type="text"
                 value={firstName}
@@ -50,12 +54,14 @@ export default function PostPage() {
             >
               Cancel
             </button>
-            <button
-              type="submit"
+            {!responseGet && <button
+              type="button"
+              onClick={() => handleSubmit()}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors"
             >
               Create User
-            </button>
+            </button>}
+            <label className="block text-sm font-medium text-red-700 mb-1">{responseGet}</label>
           </div>
         </form>
       </div>
