@@ -15,23 +15,18 @@ export default function PostPage() {
         setIsFormValid(username && password);
       }, [username, password]);
     
-
-
   const handleSubmit = () => {
     if (username && password) {
-
       userService.loginUser(username, password).then(users => { // change to look for success
         setResponseGet("Post Success");
         router.push('/volunteer'); // change later
       });
-      
     }
   };
 
   return (
     <div>
-    
-  <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
        <br />
        <br />
       <div className="max-w-4xl mx-auto">
