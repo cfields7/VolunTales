@@ -1,40 +1,23 @@
 "use client";
-import { useEffect } from "react";
-
-// API Base
-const API_BASE_URL = 'https://cfhc.fly.dev/api';
-
-const responsepost = await fetch(`${API_BASE_URL}/users/search`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json', 
-  },
-  // body: JSON.stringify(imageObject),
-});
-
-useEffect(() => {
-  const fetchData = async () => {
-    const responseget = await fetch(`${API_BASE_URL}/users`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json', 
-      },
-    });
-
-    fetchData();
-
-    }}, []);
-
-
-const getData = await responseGet.json();
-      setResponseGet(getData);
-
+import { useState, useEffect } from 'react';
+const userService = require('./request');
 
 
 export default function Home() {
+  const [responseGet, setResponseGet] = useState(null);
+  const [responsePost, setResponsePost] = useState(null);
+
+  useEffect(() => {
+    setResponseGet(userService.fetchData());
+  }, []);
+
   return (
     <div>
-    {JSON.stringify(getData)}
+      <h1>GET Response</h1>
+      <pre>{JSON.stringify(responseGet, 2)}</pre>
+
+      <h1>POST Response</h1>
+      <pre>{JSON.stringify(responsePost, 2)}</pre>
     </div>
   );
 }
