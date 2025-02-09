@@ -24,6 +24,13 @@ export default function RequestAid() {
     }
   };
 
+    // Remove a item slot if there’s more than one.
+    const removeItemSlot = (indexToRemove) => {
+      if (items.length > 1) {
+        setItems(items.filter((_, index) => index !== indexToRemove));
+      }
+    };
+
   // Form submission – build a nested payload based on the selected aid type.
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -276,6 +283,15 @@ export default function RequestAid() {
                         className="w-full bg-gray-700 text-white p-2 rounded"
                         placeholder="Quantity"
                       />
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => removeItemSlot(index)}
+                          className="text-red-500 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   ))}
                   <button
