@@ -7,7 +7,6 @@ import { Menu, X } from 'lucide-react';
 const menuItems = [
   { name: "Volunteer", path: "/volunteer" },
   { name: "Request Aid", path: "/request" },
-  { name: "Admin", path: "/admin" },
   { name: "Profile", path: "/profile" },
   { name: "Sign Out", path: "/" },
 ];
