@@ -250,6 +250,7 @@ export default function RequestAid() {
                     type="number"
                     name="goal"
                     required
+                    min="1"
                     className="w-full bg-gray-700 text-white p-2 rounded"
                   />
                 </div>
@@ -271,6 +272,7 @@ export default function RequestAid() {
                         type="number"
                         name={`itemQuantity-${index}`}
                         required
+                        min="1"
                         className="w-full bg-gray-700 text-white p-2 rounded"
                         placeholder="Quantity"
                       />
