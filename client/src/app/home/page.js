@@ -20,12 +20,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Section - Large */}
             <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
-              <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
+              <h2 className="text-2xl font-bold text-center mb-4">Lend a Helping Hand</h2>
               <p className="text-m mb-4 text-center"><i>How Will You Make an Impact Today?</i></p>
               <p className="text-center">
-              <span className='text-green-500'>VolunTales</span> saves lives.
-                <br />
-                Choose one of the options on the right to get started.
               </p>
             </div>
           </div>
