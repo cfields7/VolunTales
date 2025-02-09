@@ -23,7 +23,7 @@ const HomePage = () => {
         <div className="flex justify-center gap-4 mb-12">
           <button 
             onClick={() => router.push('/request')}
-            className="bg-blue-500 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium"
           >
             Request Assistance
           </button>
