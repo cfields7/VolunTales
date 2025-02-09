@@ -43,7 +43,8 @@ const init = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT,
       body TEXT,
-      link TEXT
+      link TEXT,
+      tag TEXT
     )
   `, (err) => {
     if (err) {
@@ -76,7 +77,8 @@ const init = () => {
       title TEXT,
       body TEXT,
       link TEXT,
-      goal TEXT
+      goal TEXT,
+      tag TEXT
     )
   `, (err) => {
     if (err) {
@@ -92,7 +94,8 @@ const init = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT,
       body TEXT,
-      link TEXT
+      link TEXT,
+      tag TEXT
     )
   `, (err) => {
     if (err) {
@@ -119,6 +122,7 @@ const init = () => {
   });
 }
 
+// DEBUG: Clear all data from the db
 const clean = () => {
   db.all("SELECT name FROM sqlite_master WHERE type='table';", (err, tables) => {
     if (err) {
@@ -128,11 +132,11 @@ const clean = () => {
 
     tables.forEach(table => {
       const tableName = table.name;
-      db.run(`DELETE FROM ${tableName};`, function (err) {
+      db.run(`DROP TABLE IF EXISTS ${tableName};`, function (err) {
         if (err) {
-          console.error(`Error deleting data from ${tableName}:`, err);
+          console.error(`Error dropping ${tableName}:`, err);
         } else {
-          console.log(`Deleted all data from ${tableName}`);
+          console.log(`Dropped table ${tableName}`);
         }
       });
     });
@@ -216,11 +220,11 @@ const getAllUsers = () => {
 const addTimeRequest = (timeRequestData) => {
   console.log("Adding time request with data ", timeRequestData);
   return new Promise((resolve, reject) => {
-    const { title, body, link, timeSlots } = timeRequestData;
-    if (title && body && link && timeSlots) {
+    const { title, body, link, tag, timeSlots } = timeRequestData;
+    if (title && body && link && tag && timeSlots) {
       db.run(
-        "INSERT INTO timeRequests (title, body, link) VALUES (?, ?, ?)",
-        [title, body, link],
+        "INSERT INTO timeRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
+        [title, body, link, tag],
         function(err) {
           if (err) {
             console.error('Error inserting timeRequest: ', err);
@@ -320,11 +324,11 @@ const getTimeSlotsByRequest = (id) => {
 const addFinanceRequest = (financeRequestData) => {
   console.log("Adding finance request with data ", financeRequestData);
   return new Promise((resolve, reject) => {
-    const { title, body, link, goal } = financeRequestData;
-    if (title && body && link && goal) {
+    const { title, body, link, tag, goal } = financeRequestData;
+    if (title && body && link && tag && goal) {
       db.run(
-        "INSERT INTO financeRequests (title, body, link, goal) VALUES (?, ?, ?, ?)",
-        [title, body, link, goal],
+        "INSERT INTO financeRequests (title, body, link, tag, goal) VALUES (?, ?, ?, ?, ?)",
+        [title, body, link, tag, goal],
         function(err) {
           if (err) {
             console.error('Error inserting financeRequest: ', err);
@@ -377,11 +381,11 @@ const getAllFinanceRequests = () => {
 const addItemRequest = (itemRequestData) => {
   console.log("Adding item request with data ", itemRequestData);
   return new Promise((resolve, reject) => {
-    const { title, body, link, items } = itemRequestData;
-    if (title && body && link && items) {
+    const { title, body, link, tag, items } = itemRequestData;
+    if (title && body && link && tag && items) {
       db.run(
-        "INSERT INTO itemRequests (title, body, link) VALUES (?, ?, ?)",
-        [title, body, link],
+        "INSERT INTO itemRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
+        [title, body, link, tag],
         function(err) {
           if (err) {
             console.error('Error inserting itemRequest: ', err);
