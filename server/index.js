@@ -30,7 +30,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).json({ message: 'Invalid or expired token' });
     }
-    req.user = decoded; // Add decoded data to request
+    req.user = decoded;
     next();
   });
 };
@@ -87,6 +87,17 @@ router.route('/users').get(verifyToken, async (req, res) => {
     res.json(users)
   } catch (error) {
     console.error('Error getting all users:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get currently logged in user
+router.route('/users/current').get(verifyToken, async (req, res) => {
+  try {
+    const user = await database.getUserByUsername(req.user.username);
+    res.json(user);
+  } catch (error) {
+    console.error('Error getting current user:', error);
     res.status(500).json({ error: error });
   }
 });
