@@ -99,6 +99,29 @@ router.route('/requests/time').get(async (req, res) => {
   }
 });
 
+// Add new finance request
+router.route('/requests/finance').post(async (req, res) => {
+  try {
+    // Add finance request to database
+    const financeRequestAdded = await database.addFinanceRequest(req.body);
+    res.json(financeRequestAdded);
+  } catch (error) {
+    console.error('Error adding finance request:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get all finance requests
+router.route('/requests/finance').get(async (req, res) => {
+  try {
+    const financeRequests = await database.getAllFinanceRequests();
+    res.json(financeRequests)
+  } catch (error) {
+    console.error('Error getting all finance requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
 //////////
 
 // Serve the app
