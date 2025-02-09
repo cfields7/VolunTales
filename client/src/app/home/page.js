@@ -23,7 +23,7 @@ export default function HomePage() {
               <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
               <p className="text-m mb-4 text-center"><i>How Will You Make an Impact Today?</i></p>
               <p className="text-center">
-              <span className='text-purple-500'>VolunTales</span> saves lives.
+              <span className='text-green-500'>VolunTales</span> saves lives.
                 <br />
                 Choose one of the options on the right to get started.
               </p>
