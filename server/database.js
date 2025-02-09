@@ -85,6 +85,38 @@ const init = () => {
       console.log("financeRequests table created or already exists");
     }
   });
+
+  // Create a "itemRequests" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS itemRequests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
+      body TEXT,
+      link TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating itemRequests table:", err);
+    } else {
+      console.log("itemRequests table created or already exists");
+    }
+  });
+
+  // Create a "items" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      requestId INTEGER,
+      name TEXT,
+      quantity TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating items table:", err);
+    } else {
+      console.log("items table created or already exists");
+    }
+  });
 }
 
 // Add a new user
@@ -216,7 +248,7 @@ const getTimeRequest = (id) => {
   });
 };
 
-// Get a user by id
+// Get all time request
 const getAllTimeRequests = () => {
   console.log('Getting all time requests');
   return new Promise((resolve, reject) => {
@@ -321,6 +353,110 @@ const getAllFinanceRequests = () => {
   });
 };
 
+// Add a new item request
+const addItemRequest = (itemRequestData) => {
+  console.log("Adding item request with data ", itemRequestData);
+  return new Promise((resolve, reject) => {
+    const { title, body, link, items } = itemRequestData;
+    if (title && body && link && items) {
+      db.run(
+        "INSERT INTO itemRequests (title, body, link) VALUES (?, ?, ?)",
+        [title, body, link],
+        function(err) {
+          if (err) {
+            console.error('Error inserting itemRequest: ', err);
+            reject(err);
+          } else {
+            console.log("adding items" + JSON.stringify(items) + " to request " + this.lastID);
+            for (let item of items) {
+              console.log("adding " + item.name + " (" + item.quantity + ")");
+              db.run(
+                "INSERT INTO items (requestId, name, quantity) VALUES (?, ?, ?)",
+                [this.lastID, item.name, item.quantity],
+                function(err) {
+                  if (err) {
+                    console.error('Error inserting item: ', err);
+                    reject(err);
+                  }
+                }
+              );
+            }
+
+            const addedRequestData = getItemRequest(this.lastID);
+            resolve(addedRequestData);
+          }
+        }
+      );
+    } else {
+      reject("Required field(s) not provided");
+    }
+  });
+};
+
+// Get an item request by id
+const getItemRequest = (id) => {
+  console.log('Getting item request with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM itemRequests WHERE id = ?', [id], (err, itemRequest) => {
+      if (err) {
+        console.error('Error getting item request by id:', err);
+        reject(err);
+      } else {
+        console.log('Found item request:', itemRequest);
+        resolve(itemRequest);
+      }
+    });
+  });
+};
+
+// Get all item requests
+const getAllItemRequests = () => {
+  console.log('Getting all item requests');
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM itemRequests', (err, itemRequests) => {
+      if (err) {
+        console.error('Error getting all item requests:', err);
+        reject(err);
+      } else {
+        console.log('Found item requests: ', itemRequests);
+        resolve(itemRequests);
+      }
+    });
+  });
+};
+
+// Get an item by id
+const getItem = (id) => {
+  console.log('Getting item with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM items WHERE id = ?', [id], (err, item) => {
+      if (err) {
+        console.error('Error getting item by id:', err);
+        reject(err);
+      } else {
+        console.log('Found item:', item);
+        resolve(item);
+      }
+    });
+  });
+};
+
+// Get items by request id
+const getItemsByRequest = (id) => {
+  console.log('Getting items with request id ', id);
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM items WHERE requestId = ?', [id], (err, items) => {
+      if (err) {
+        console.error('Error getting items by request id:', err);
+        reject(err);
+      } else {
+        console.log('Found items:', items);
+        resolve(items);
+      }
+    });
+  });
+};
+
 module.exports = {
   init,
   addUser,
@@ -334,5 +470,10 @@ module.exports = {
   getTimeSlotsByRequest,
   addFinanceRequest,
   getFinanceRequest,
-  getAllFinanceRequests
+  getAllFinanceRequests,
+  addItemRequest,
+  getItemRequest,
+  getAllItemRequests,
+  getItem,
+  getItemsByRequest
 };
