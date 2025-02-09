@@ -1,6 +1,7 @@
 "use client";
 import Header from '../components/header';
 import { useState } from 'react';
+import Background from '../components/background';
 
 export default function RequestAid() {
   const [selectedAidType, setSelectedAidType] = useState(null);
@@ -21,6 +22,7 @@ export default function RequestAid() {
   return (
     <div>
       <Header />
+      <Background />
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
         <br />
         <br />
@@ -29,7 +31,7 @@ export default function RequestAid() {
           <h1 className="text-4xl font-bold text-white text-center">Request Assistance</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
+
             {/* Left Section */}
             <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
               <p className="text-lg mb-4 text-center">What type of assistance do you need?</p>

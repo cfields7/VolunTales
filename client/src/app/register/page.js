@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { userService } from '../services/userService';
+import Background from '../components/background';
 
 export default function PostPage() {
   const router = useRouter();
@@ -35,7 +36,8 @@ export default function PostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+    <div>
+        <Background />
       <br />
       <br />
       <div className="max-w-4xl mx-auto">

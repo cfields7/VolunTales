@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { userService } from './services/userService';
 import { useRouter } from 'next/navigation';
 import Header from './components/header';
+import Background from './components/background';
 import { User, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -26,8 +27,7 @@ export default function Home() {
 
   return (
     <div> 
-      {/* <Header /> */}
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+      <Background />
          <br />
          <br />
          <motion.div 
@@ -69,6 +69,7 @@ export default function Home() {
 
       </motion.div>
       </div>
-    </div>
+      
+    // </div>
   );
 }

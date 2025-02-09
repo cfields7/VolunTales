@@ -1,12 +1,14 @@
 "use client";
 import Header from '../components/header';
 import Link from 'next/link';
+import Background from '../components/background';
 
 export default function Volunteer() {
   return (
     <div>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 p-8">
+      <Background />
+      
         <br />
         <br />
         <br />
@@ -69,6 +71,6 @@ export default function Volunteer() {
           </div>
         </div>
       </div>
-    </div>
+
   );
 }
