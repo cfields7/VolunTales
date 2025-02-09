@@ -6,6 +6,30 @@ import Background from '../components/background';
 import Header from '../components/header';
 
 export default function HomePage() {
-  /** <h1 className="text-4xl font-bold text-white text-center">HOME</h1> */
-  
+  return (
+    <div>
+      <Header />
+      <Background />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div className="max-w-6xl mx-auto space-y-12">
+          <h1 className="text-4xl font-bold text-white text-center">Home Page</h1>
+          {/* Main Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Left Section - Large */}
+            <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
+              <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
+              <p className="text-m mb-4 text-center"><i>How Will You Make an Impact Today?</i></p>
+              <p className="text-center">
+              <span className='text-purple-500'>VolunTales</span> saves lives.
+                <br />
+                Choose one of the options on the right to get started.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  );
 }
