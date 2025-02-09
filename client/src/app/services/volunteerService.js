@@ -22,7 +22,6 @@ export const volunteerService = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
-
     return Promise.resolve(res);
   },
 
@@ -45,7 +44,6 @@ export const volunteerService = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
       });
-
     return Promise.resolve(res);
   },
 
@@ -62,7 +60,6 @@ export const volunteerService = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
       });
-
     return Promise.resolve(res);
   },
 
