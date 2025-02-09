@@ -86,18 +86,20 @@ export default function RequestAid() {
         <h1 className="text-4xl font-bold text-white text-center">Request Assistance</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Section */}
-          <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
-            <p className="text-lg mb-4 text-center">What type of assistance do you need?</p>
-            <h2 className="text-2xl font-semibold text-center mb-4">We're Here to Help</h2>
-            <p className="text-center">
-              Let us know what kind of support you require and we'll help connect you with volunteers.
-              <br />
-              Select an assistance type to get started.
-            </p>
-          </div>
+          <div className="bg-gray-800 flex flex-col justify-center items-center text-white p-8 rounded-2xl shadow-lg">
+          <h2 className="text-2xl font-semibold text-center mb-4">We're Here to Help</h2>
+          <p className="text-lg mb-4 text-center"><i>What type of assistance do you need?</i></p>
+          <p className="text-center">
+            Let us know what kind of support you require and we'll help connect you with volunteers.
+            <br />
+            <br />
+            Select an assistance type to get started.
+          </p>
+        </div>
+
 
           {/* Right Section – Aid Type Selection Buttons */}
-          <div className="space-y-6">
+          <div className="space-y-6 justify-center items-center">
             <button
               onClick={() => handleAidTypeClick('time')}
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
@@ -116,7 +118,7 @@ export default function RequestAid() {
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-left items-center text-lg">💵</div>
+                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
                 <div className='items-left'>
                   <h3 className="text-xl font-semibold">Request Financial Assistance</h3>
                   <p className="text-sm">Set up a financial goal for your needs</p>
@@ -161,21 +163,10 @@ export default function RequestAid() {
               Submit Your Tale
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Link Field */}
-              <div>
-                <label className="block text-white mb-2">Link</label>
-                <input
-                  type="url"
-                  name="link"
-                  required
-                  className="w-full bg-gray-700 text-white p-2 rounded"
-                  placeholder="https://example.com"
-                />
-              </div>
               
               {/* Title Field */}
               <div>
-                <label className="block text-white mb-2">Short Title</label>
+                <label className="block text-white mb-2">Title <span className="text-red-500">*</span></label> 
                 <input
                   type="text"
                   name="title"
@@ -186,18 +177,27 @@ export default function RequestAid() {
               
               {/* Description Field */}
               <div>
-                <label className="block text-white mb-2">Tell Your Tale</label>
+                <label className="block text-white mb-2">Tell Your Tale <span className="text-red-500">*</span></label> 
                 <textarea
                   name="body"
                   required
                   className="w-full bg-gray-700 text-white p-2 rounded h-32"
                 />
               </div>
-
+              {/* Link Field */}
+              <div>
+                <label className="block text-white mb-2">Link</label>
+                <input
+                  type="url"
+                  name="link"
+                  className="w-full bg-gray-700 text-white p-2 rounded"
+                  placeholder="https://example.com"
+                />
+              </div>
               {/* Conditional Fields Based on Selected Aid Type */}
               {selectedAidType === 'time' && (
                 <div>
-                  <label className="block text-white mb-2">Time Slots Needed</label>
+                  <label className="block text-white mb-2">Time Slots Needed <span className="text-red-500">*</span></label>
                   {timeSlots.map((slot, index) => (
                     <div key={slot.id} className="flex items-center space-x-2 mb-2">
                       <span className="text-white">Start:</span>
@@ -237,7 +237,7 @@ export default function RequestAid() {
 
               {selectedAidType === 'money' && (
                 <div>
-                  <label className="block text-white mb-2">Financial Goal ($)</label>
+                  <label className="block text-white mb-2">Financial Goal ($) <span className="text-red-500">*</span></label>
                   <input
                     type="number"
                     name="goal"
@@ -250,7 +250,7 @@ export default function RequestAid() {
 
               {selectedAidType === 'items' && (
                 <div>
-                  <label className="block text-white mb-2">Items Needed</label>
+                  <label className="block text-white mb-2">Items Needed <span className="text-red-500">*</span></label>
                   {items.map((item, index) => (
                     <div key={item.id} className="flex space-x-2 mb-2">
                       <input
@@ -290,7 +290,7 @@ export default function RequestAid() {
               )}
               {/* Tag Dropdown */}
               <div>
-                <label className="block text-white mb-2">Tag your post</label>
+                <label className="block text-white mb-2">Tag your post <span className="text-red-500">*</span></label>
                 <select
                   name="tag"
                   className="w-full bg-gray-700 text-white p-2 rounded"

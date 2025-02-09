@@ -17,7 +17,7 @@ export default function Volunteer() {
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Section - Large */}
-            <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
+            <div className="bg-gray-800 flex flex-col justify-center items-center text-white p-8 rounded-2xl shadow-lg">
               <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
               <p className="text-m mb-4 text-center"><i>How Will You Make an Impact Today?</i></p>
               <p className="text-center">
