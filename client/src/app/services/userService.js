@@ -7,7 +7,7 @@ export const userService = {
     return Promise.resolve(res.json());
   },
 
-  async addUser(firstName, lastName, username, password, admin, email) {
+  async addUser(firstName, lastName, username, password, email) {
     const res = await fetch(serverPath + '/users', {
       method: "POST",
       body: JSON.stringify({
@@ -15,7 +15,6 @@ export const userService = {
         lastName: lastName,
         username: username,
         password: password,
-        admin: admin,
         email: email
       }),
       headers: {

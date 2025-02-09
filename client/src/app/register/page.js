@@ -11,7 +11,6 @@ export default function PostPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [admin, setAdmin] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
   // Check if all required fields are filled
@@ -22,7 +21,7 @@ export default function PostPage() {
   const handleSubmit = () => {
     if (isFormValid) {
 
-      userService.addUser(firstName, lastName, username, password, admin, email).then(response => {
+      userService.addUser(firstName, lastName, username, password, email).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
           router.push('/volunteer'); // change later
@@ -111,17 +110,6 @@ export default function PostPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter email"
-              />
-            </div>
-
-            {/* Admin */}
-            <div className="flex items-center justify-between space-x-4">
-              <label className="text-sm font-medium text-white">Set Admin Privledges</label>
-              <input
-                type="checkbox"
-                checked={admin}
-                onChange={(e) => setAdmin(e.target.checked)}
-                className="h-5 w-5 border rounded focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
               />
             </div>
           </div>

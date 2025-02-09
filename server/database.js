@@ -27,7 +27,6 @@ const init = () => {
       password TEXT,
       firstName TEXT,
       lastName TEXT,
-      admin BOOLEAN,
       email TEXT
     )
   `, (err) => {
@@ -43,11 +42,11 @@ const init = () => {
 const addUser = (userData) => {
   console.log("Adding user with data ", userData);
   return new Promise((resolve, reject) => {
-    const { username, password, firstName, lastName, admin, email } = userData;
-    if (username && password && firstName && lastName && admin) {
+    const { username, password, firstName, lastName, email } = userData;
+    if (username && password && firstName && lastName) {
       db.run(
-        "INSERT INTO users (username, password, firstName, lastName, admin, email) VALUES (?, ?, ?, ?, ?, ?)",
-        [username, password, firstName, lastName, admin, email],
+        "INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)",
+        [username, password, firstName, lastName, email],
         function(err) {
           if (err) {
             console.error('Error inserting user: ', err);
