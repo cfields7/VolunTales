@@ -69,7 +69,7 @@ export default function PostPage() {
             <button
               type="button"
               onClick={() => router.push('/')}
-              className="px-4 py-2 rounded-md bg-red-600 text-white-600 hover:bg-red-90"
+              className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-90"
             >
               Cancel
             </button>
