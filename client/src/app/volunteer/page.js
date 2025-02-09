@@ -21,7 +21,7 @@ export default function Volunteer() {
               <p className="text-lg mb-4 text-center">How Will You Make an Impact Today?</p>
               <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
               <p className="text-center">
-              VolunTales is here to help you make a real difference! Discover opportunities that align with your unique skills, experience, and availability. Choose one of the options on the right and embark on a rewarding adventure of giving back and transforming lives.
+              VolunTales is here to help you make a real difference!  Discover opportunities that align with your unique skills, experience, and availability. Choose one of the options on the right and embark on a rewarding adventure of giving back and transforming lives.
                 <br />
                 Choose one of the options on the right to get started.
               </p>
@@ -38,7 +38,7 @@ export default function Volunteer() {
                     <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
                     <div>
                       <h3 className="text-xl font-semibold">Contribute Your Time</h3>
-                      <p className="text-sm">Invest your time in the community by volunteering with local charities and causes. Your effoerts can help to build a stronger, united community</p>
+                      <p className="text-sm">Invest your time in the community by volunteering with local charities and causes. Your efforts can help to build a stronger, united community</p>
                     </div>
                   </div>
               </Link>
