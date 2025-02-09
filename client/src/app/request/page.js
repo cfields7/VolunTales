@@ -116,8 +116,8 @@ export default function RequestAid() {
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
-                <div>
+                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-left items-center text-lg">💵</div>
+                <div className='items-left'>
                   <h3 className="text-xl font-semibold">Request Financial Assistance</h3>
                   <p className="text-sm">Set up a financial goal for your needs</p>
                 </div>

@@ -41,7 +41,7 @@ export default function PostPage() {
       <br />
       <br />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-white-800 mb-8">Register A New Account</h1>
+        <h1 className="text-3xl font-bold text-white mb-8">Register A New Account</h1>
 
         <form onSubmit={handleSubmit} className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-lg shadow-md p-6 space-y-6">
           <div className="space-y-4">
