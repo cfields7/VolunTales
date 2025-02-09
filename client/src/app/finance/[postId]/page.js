@@ -14,7 +14,7 @@ export default function FullPostPage() {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const res = await volunteerService.getPostById(postId);
+        const res = await volunteerService.getPostById(postId, "finance");
         const data = await res.json();
         setPost(data);
       } catch (error) {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation"; // For Next.js 13 App Router; if using the Pages Router, use useRouter from 'next/router'
 import Header from "../../components/header";
+import Link from "next/link";
 import Background from "../../components/background";
 import { volunteerService } from "../../services/volunteerService";
 
@@ -14,7 +15,7 @@ export default function FullPostPage() {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const res = await volunteerService.getPostById(postId);
+        const res = await volunteerService.getPostById(postId, "item");
         const data = await res.json();
         setPost(data);
       } catch (error) {
@@ -66,16 +67,21 @@ export default function FullPostPage() {
             ))}
           </div>
         )}
-        {post.link && (
-          <a
-            href={post.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md"
-          >
-            Visit Link
-          </a>
-        )}
+         <div className="flex space-x-4">
+              {post.link && (
+                  <a
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md"
+                  >
+                    Visit Link
+                  </a>
+                )}
+                <Link href={`/items/${post.id}`} className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md">
+                    View Full Post
+                </Link>
+                </div>
       </div>
     </div>
   );
