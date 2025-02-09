@@ -9,6 +9,7 @@ const createUniqueId = () => Date.now() + Math.random();
 export default function RequestAid() {
   const [selectedAidType, setSelectedAidType] = useState(null);
 
+  const [timeSlots, setTimeSlots] = useState([{ id: createUniqueId() }]);
   const [items, setItems] = useState([{ id: createUniqueId() }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
