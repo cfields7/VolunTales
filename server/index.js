@@ -84,6 +84,21 @@ router.route('/requests/time').post(async (req, res) => {
   }
 });
 
+// Get time request by id
+router.route('/requests/time/:id').get(async (req, res) => {
+  try {
+    const request = await database.getTimeRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Time Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting time request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Get all time requests
 router.route('/requests/time').get(async (req, res) => {
   try {
@@ -111,6 +126,21 @@ router.route('/requests/finance').post(async (req, res) => {
   }
 });
 
+// Get finance request by id
+router.route('/requests/finance/:id').get(async (req, res) => {
+  try {
+    const request = await database.getFinanceRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Finance Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting finance request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Get all finance requests
 router.route('/requests/finance').get(async (req, res) => {
   try {
@@ -130,6 +160,21 @@ router.route('/requests/item').post(async (req, res) => {
     res.json(itemRequestAdded);
   } catch (error) {
     console.error('Error adding item request:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get item request by id
+router.route('/requests/item/:id').get(async (req, res) => {
+  try {
+    const request = await database.getItemRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Item Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting item request ${req.params.id}:`, error);
     res.status(500).json({ error: error });
   }
 });
