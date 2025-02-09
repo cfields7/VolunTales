@@ -32,10 +32,10 @@ export default function Home() {
           localStorage.setItem("token", loginData.token);
           router.push('/home');
         } else {
-          console.error('Login failed: No token returned.');
+          console.log('Login failed: No token returned.');
         }
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.log('An error occurred:', error);
       }
     };
   
