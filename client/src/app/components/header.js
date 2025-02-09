@@ -5,8 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
 const menuItems = [
+  { name: "Home", path: "/home" },
   { name: "Volunteer", path: "/volunteer" },
   { name: "Request Aid", path: "/request" },
+  { name: "Profile", path: "/profile" },
   { name: "Sign Out", path: "/" },
 ];
 
