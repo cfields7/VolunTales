@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const DB_FILE = "./data/test.db";
+const DB_FILE = "/data/test.db";
 
 // Sqlite 3 Database
 let db;
@@ -36,6 +36,38 @@ const init = () => {
       console.log("Users table created or already exists");
     }
   });
+
+  // Create a "timeRequests" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS timeRequests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
+      body TEXT,
+      link TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating timeRequests table:", err);
+    } else {
+      console.log("timeRequests table created or already exists");
+    }
+  });
+
+  // Create a "timeSlots" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS timeSlots (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      requestId INTEGER,
+      start TEXT,
+      end TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating timeSlots table:", err);
+    } else {
+      console.log("timeSlots table created or already exists");
+    }
+  });
 }
 
 // Add a new user
@@ -52,8 +84,8 @@ const addUser = (userData) => {
             console.error('Error inserting user: ', err);
             reject(err);
           } else {
-            const updatedUserData = getUser(this.lastID);
-            resolve(updatedUserData);
+            const addedUserData = getUser(this.lastID);
+            resolve(addedUserData);
           }
         }
       );
@@ -111,10 +143,119 @@ const getAllUsers = () => {
   });
 };
 
+// Add a new time request
+const addTimeRequest = (timeRequestData) => {
+  console.log("Adding time request with data ", timeRequestData);
+  return new Promise((resolve, reject) => {
+    const { title, body, link, timeSlots } = timeRequestData;
+    if (title && body && link && timeSlots) {
+      db.run(
+        "INSERT INTO timeRequests (title, body, link) VALUES (?, ?, ?)",
+        [title, body, link],
+        function(err) {
+          if (err) {
+            console.error('Error inserting timeRequest: ', err);
+            reject(err);
+          } else {
+            console.log("adding timeslots" + JSON.stringify(timeSlots) + " to request " + this.lastID);
+            for (let timeSlot of timeSlots) {
+              console.log("adding " + timeSlot.start + " - " + timeSlot.end);
+              db.run(
+                "INSERT INTO timeSlots (requestId, start, end) VALUES (?, ?, ?)",
+                [this.lastID, timeSlot.start, timeSlot.end],
+                function(err) {
+                  if (err) {
+                    console.error('Error inserting timeSlot: ', err);
+                    reject(err);
+                  }
+                }
+              );
+            }
+
+            const addedRequestData = getTimeRequest(this.lastID);
+            resolve(addedRequestData);
+          }
+        }
+      );
+    } else {
+      reject("Required field(s) not provided");
+    }
+  });
+};
+
+// Get a request by id
+const getTimeRequest = (id) => {
+  console.log('Getting request with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM timeRequests WHERE id = ?', [id], (err, timeRequest) => {
+      if (err) {
+        console.error('Error getting time request by id:', err);
+        reject(err);
+      } else {
+        console.log('Found time request:', timeRequest);
+        resolve(timeRequest);
+      }
+    });
+  });
+};
+
+// Get a user by id
+const getAllTimeRequests = () => {
+  console.log('Getting all time requests');
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM timeRequests', (err, timeRequests) => {
+      if (err) {
+        console.error('Error getting all time requests:', err);
+        reject(err);
+      } else {
+        console.log('Found time requests: ', timeRequests);
+        resolve(timeRequests);
+      }
+    });
+  });
+};
+
+// Get a time slot by id
+const getTimeSlot = (id) => {
+  console.log('Getting time slot with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM timeSlots WHERE id = ?', [id], (err, timeSlot) => {
+      if (err) {
+        console.error('Error getting time slot by id:', err);
+        reject(err);
+      } else {
+        console.log('Found time slot:', timeSlot);
+        resolve(timeSlot);
+      }
+    });
+  });
+};
+
+// Get a time slots by request id
+const getTimeSlotsByRequest = (id) => {
+  console.log('Getting time slot with request id ', id);
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM timeSlots WHERE requestId = ?', [id], (err, timeSlots) => {
+      if (err) {
+        console.error('Error getting time slots by request id:', err);
+        reject(err);
+      } else {
+        console.log('Found time slots:', timeSlots);
+        resolve(timeSlots);
+      }
+    });
+  });
+};
+
 module.exports = {
   init,
   addUser,
   getUser,
   getUserByUsername,
-  getAllUsers
+  getAllUsers,
+  addTimeRequest,
+  getTimeRequest,
+  getAllTimeRequests,
+  getTimeSlot,
+  getTimeSlotsByRequest
 };
