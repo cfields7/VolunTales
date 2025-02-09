@@ -99,6 +99,67 @@ router.route('/requests/time').get(async (req, res) => {
   }
 });
 
+// Add new finance request
+router.route('/requests/finance').post(async (req, res) => {
+  try {
+    // Add finance request to database
+    const financeRequestAdded = await database.addFinanceRequest(req.body);
+    res.json(financeRequestAdded);
+  } catch (error) {
+    console.error('Error adding finance request:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get all finance requests
+router.route('/requests/finance').get(async (req, res) => {
+  try {
+    const financeRequests = await database.getAllFinanceRequests();
+    res.json(financeRequests)
+  } catch (error) {
+    console.error('Error getting all finance requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Add new item request
+router.route('/requests/item').post(async (req, res) => {
+  try {
+    // Add item request to database
+    const itemRequestAdded = await database.addItemRequest(req.body);
+    res.json(itemRequestAdded);
+  } catch (error) {
+    console.error('Error adding item request:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get all item requests
+router.route('/requests/item').get(async (req, res) => {
+  try {
+    const itemRequests = await database.getAllItemRequests();
+    for (const itemRequest of itemRequests) {
+      itemRequest.items = await database.getItemsByRequest(itemRequest.id);
+      console.log("items: " + JSON.stringify(itemRequest.items));
+    }
+    res.json(itemRequests);
+  } catch (error) {
+    console.error('Error getting all item requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Clean the database
+router.route('/clean').post(async (req, res) => {
+  try {
+    database.clean();
+    res.json({ success: "true" });
+  } catch (error) {
+    console.error('Error cleaning database:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
 //////////
 
 // Serve the app

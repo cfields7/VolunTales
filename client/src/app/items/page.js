@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { volunteerService } from "../services/volunteerService";
+import Link from "next/link";
 import Header from "../components/header";
 import Background from "../components/background";
 
@@ -49,6 +50,19 @@ export default function ItemsAssistancePage() {
                     <span className="font-bold">Quantity:</span> {item.quantity}
                   </div>
                 ))}
+                {post.link && (
+                  <a
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md"
+                  >
+                    Visit Link
+                  </a>
+                )}
+                <Link href={`/items/${post.id}`} className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md">
+                    View Full Post
+                </Link>
             </div>
           ))
         )}

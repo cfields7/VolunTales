@@ -31,8 +31,19 @@ export const volunteerService = {
         "Content-type": "application/json; charset=UTF-8"
       }
     });
+    return Promise.resolve(res);
+  },
+
+  async getPostById(postId, service) {
+    const res = await fetch(serverPath + `/requests/${service}/${postId}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      });
 
     return Promise.resolve(res);
-  }
+  },
+
 
 }
