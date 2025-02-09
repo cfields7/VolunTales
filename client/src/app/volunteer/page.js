@@ -21,7 +21,7 @@ export default function Volunteer() {
               <p className="text-lg mb-4 text-center">How would you like to volunteer?</p>
               <h2 className="text-2xl font-semibold text-center mb-4">Everything Helps!</h2>
               <p className="text-center">
-                No matter what your volunteering experience, skillset, or availability, WebsiteName can help you help others!
+                No matter what your volunteering experience, skillset, or availability, VolunTales can help you help others!
                 <br />
                 Choose one of the options on the right to get started.
               </p>
