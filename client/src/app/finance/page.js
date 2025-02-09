@@ -34,11 +34,8 @@ export default function FinanceAssistancePage() {
   // Filter the posts by selected tags
   useEffect(() => {
     const filteredPosts = financeData.filter(post => {
-      const matchesTags =
-        selectedTags.length === 0 ||
-        (post.tag && post.tag.some(tag => selectedTags.includes(tag.value)));
-
-      return matchesTags;
+      if (selectedTags.length === 0) return true; // No tag selected, show all posts
+      return selectedTags.some(tag => tag.value === post.tag); // Filter by selected tag
     });
 
     setFilteredData(filteredPosts);

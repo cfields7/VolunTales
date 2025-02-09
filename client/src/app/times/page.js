@@ -38,9 +38,8 @@ export default function TimeAssistancePage() {
   // Filter posts by selected tags and date range
   useEffect(() => {
     const filteredPosts = timeData.filter(post => {
-      const matchesTags =
-        selectedTags.length === 0 ||
-        (post.tag && post.tag.some(tag => selectedTags.includes(tag)));
+      if (selectedTags.length === 0) return true; 
+      const matchesTags = selectedTags.some(tag => tag.value === post.tag);
 
       const matchesDateRange =
         (!startDate || new Date(post.timeSlots[0].start) >= startDate) &&

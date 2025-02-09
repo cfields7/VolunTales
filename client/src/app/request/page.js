@@ -4,59 +4,60 @@ import { useState } from 'react';
 import { requestsService } from "../services/requestsService";
 import Background from '../components/background';
 
-// Utility to create a unique ID
+// Utility to create a unique ID.
 const createUniqueId = () => Date.now() + Math.random();
 
 export default function RequestAid() {
   const [selectedAidType, setSelectedAidType] = useState(null);
+
   const [timeSlots, setTimeSlots] = useState([{ id: createUniqueId() }]);
   const [items, setItems] = useState([{ id: createUniqueId() }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [customTag, setCustomTag] = useState(""); // New state for custom tag input
 
-  // Handle the tag input change when the user types a custom tag
-  const handleCustomTagChange = (e) => {
-    setCustomTag(e.target.value);
-  };
-
+  // When an aid type is selected, set the type and open the modal.
   const handleAidTypeClick = (type) => {
     setSelectedAidType(type);
     setIsModalOpen(true);
   };
 
+  // Remove a time slot by its unique id.
   const removeTimeSlot = (idToRemove) => {
     if (timeSlots.length > 1) {
       setTimeSlots(timeSlots.filter((slot) => slot.id !== idToRemove));
     }
   };
 
+  // Remove an item slot by its unique id.
   const removeItemSlot = (idToRemove) => {
     if (items.length > 1) {
       setItems(items.filter((item) => item.id !== idToRemove));
     }
   };
 
+  // Form submission 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+
+    // Get the link, title, and description.
     const link = formData.get("link");
     const title = formData.get("title");
     const body = formData.get("body");
-    const tag = customTag || formData.get("tag"); // Use custom tag if provided
+    const tag = formData.get("tag");
 
-    let payload = { link, title, body, tag };
+    let payload = { link, title, body };
 
     if (selectedAidType === 'time') {
       payload.timeSlots = timeSlots.map((slot) => ({
         start: formData.get(`timeSlotStart-${slot.id}`),
         end: formData.get(`timeSlotEnd-${slot.id}`)
       }));
-      requestsService.requestTime(payload);
+      requestsService.requestTime(payload)
     }
 
     if (selectedAidType === 'money') {
       payload.goal = formData.get("goal");
-      requestsService.requestFinance(payload);
+      requestsService.requestFinance(payload)
     }
 
     if (selectedAidType === 'items') {
@@ -64,13 +65,15 @@ export default function RequestAid() {
         name: formData.get(`item-${item.id}`),
         quantity: formData.get(`itemQuantity-${item.id}`)
       }));
-      requestsService.requestTime(payload);
+      requestsService.requestTime(payload)
     }
 
     console.log(payload);
+    // Close the modal after submission.
     setIsModalOpen(false);
   };
 
+  // Functions to add additional fields.
   const addTimeSlot = () => setTimeSlots([...timeSlots, { id: createUniqueId() }]);
   const addItem = () => setItems([...items, { id: createUniqueId() }]);
 
@@ -169,7 +172,7 @@ export default function RequestAid() {
                   placeholder="https://example.com"
                 />
               </div>
-
+              
               {/* Title Field */}
               <div>
                 <label className="block text-white mb-2">Short Title</label>
@@ -180,7 +183,7 @@ export default function RequestAid() {
                   className="w-full bg-gray-700 text-white p-2 rounded"
                 />
               </div>
-
+              
               {/* Description Field */}
               <div>
                 <label className="block text-white mb-2">Tell Your Tale</label>
@@ -195,7 +198,7 @@ export default function RequestAid() {
               {selectedAidType === 'time' && (
                 <div>
                   <label className="block text-white mb-2">Time Slots Needed</label>
-                  {timeSlots.map((slot) => (
+                  {timeSlots.map((slot, index) => (
                     <div key={slot.id} className="flex items-center space-x-2 mb-2">
                       <span className="text-white">Start:</span>
                       <input
@@ -248,21 +251,21 @@ export default function RequestAid() {
               {selectedAidType === 'items' && (
                 <div>
                   <label className="block text-white mb-2">Items Needed</label>
-                  {items.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-2 mb-2">
+                  {items.map((item, index) => (
+                    <div key={item.id} className="flex space-x-2 mb-2">
                       <input
                         type="text"
                         name={`item-${item.id}`}
                         required
-                        className="bg-gray-700 text-white p-2 rounded"
-                        placeholder="Item Name"
+                        className="w-full bg-gray-700 text-white p-2 rounded"
+                        placeholder="Item name"
                       />
                       <input
                         type="number"
                         name={`itemQuantity-${item.id}`}
                         required
                         min="1"
-                        className="bg-gray-700 text-white p-2 rounded"
+                        className="w-full bg-gray-700 text-white p-2 rounded"
                         placeholder="Quantity"
                       />
                       {items.length > 1 && (
@@ -285,37 +288,42 @@ export default function RequestAid() {
                   </button>
                 </div>
               )}
-
-              {/* Custom Tag Section */}
+              {/* Tag Dropdown */}
               <div>
-                <label className="block text-white mb-2">Tag Your Post</label>
+                <label className="block text-white mb-2">Tag your post</label>
                 <select
                   name="tag"
-                  className="w-full bg-gray-700 text-white p-2 rounded mb-2"
-                  defaultValue=""
+                  className="w-full bg-gray-700 text-white p-2 rounded"
+                  required
                 >
-                  <option value="custom">Custom</option>
-                  <option value="time">Time</option>
-                  <option value="money">Money</option>
-                  <option value="items">Items</option>
+                  {selectedAidType === 'time' && (
+                    <>
+                      <option value="volunteer">Volunteer</option>
+                      <option value="community support">Community Support</option>
+                      <option value="education">Education</option>
+                    </>
+                  )}
+                  {selectedAidType === 'money' && (
+                    <>
+                      <option value="fundraising">Fundraising</option>
+                      <option value="charity">Charity</option>
+                      <option value="emergency assistance">Emergency Assistance</option>
+                    </>
+                  )}
+                  {selectedAidType === 'items' && (
+                    <>
+                      <option value="donation">Donation</option>
+                      <option value="supplies">Supplies</option>
+                      <option value="equipment">Equipment</option>
+                    </>
+                  )}
                 </select>
-
-                {/* Custom Tag Input */}
-                {customTag === "" && (
-                  <input
-                    type="text"
-                    value={customTag}
-                    onChange={handleCustomTagChange}
-                    className="w-full bg-gray-700 text-white p-2 rounded"
-                    placeholder="Enter your custom tag"
-                  />
-                )}
               </div>
               <button
                 type="submit"
-                className="w-full bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-700"
+                className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors"
               >
-                Submit Request
+                Submit Tale
               </button>
             </form>
           </div>
