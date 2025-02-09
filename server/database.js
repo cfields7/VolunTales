@@ -45,7 +45,9 @@ const init = () => {
       title TEXT,
       body TEXT,
       link TEXT,
-      tag TEXT
+      tag TEXT,
+      owner TEXT,
+      completed BOOLEAN
     )
   `, (err) => {
     if (err) {
@@ -79,7 +81,9 @@ const init = () => {
       body TEXT,
       link TEXT,
       goal TEXT,
-      tag TEXT
+      tag TEXT,
+      owner TEXT,
+      completed BOOLEAN
     )
   `, (err) => {
     if (err) {
@@ -96,7 +100,9 @@ const init = () => {
       title TEXT,
       body TEXT,
       link TEXT,
-      tag TEXT
+      tag TEXT,
+      owner TEXT,
+      completed BOOLEAN
     )
   `, (err) => {
     if (err) {
@@ -260,14 +266,14 @@ const getAllUsers = () => {
 };
 
 // Add a new time request
-const addTimeRequest = (timeRequestData) => {
+const addTimeRequest = (owner, timeRequestData) => {
   console.log("Adding time request with data ", timeRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, timeSlots } = timeRequestData;
-    if (title && body && tag && timeSlots) {
+    if (title && body && tag && owner && timeSlots) {
       db.run(
-        "INSERT INTO timeRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
-        [title, body, link, tag],
+        "INSERT INTO timeRequests (title, body, link, tag, owner, completed) VALUES (?, ?, ?, ?, ?, ?)",
+        [title, body, link, tag, owner, false],
         function(err) {
           if (err) {
             console.error('Error inserting timeRequest: ', err);
@@ -296,6 +302,26 @@ const addTimeRequest = (timeRequestData) => {
     } else {
       reject("Required field(s) not provided");
     }
+  });
+};
+
+// Mark time request as completed
+const markTimeRequestCompleted = (id) => {
+  console.log("Marking time request completed");
+  return new Promise((resolve, reject) => {
+    db.run(
+      "UPDATE timeRequests SET completed = ? WHERE id = ?",
+      [true, id],
+      function(err) {
+        if (err) {
+          console.error('Error completing time request: ', err);
+          reject(err);
+        } else {
+          const updatedTimeRequest = getTimeRequest(id);
+          resolve(updatedTimeRequest);
+        }
+      }
+    );
   });
 };
 
@@ -364,14 +390,14 @@ const getTimeSlotsByRequest = (id) => {
 };
 
 // Add a new finance request
-const addFinanceRequest = (financeRequestData) => {
+const addFinanceRequest = (owner, financeRequestData) => {
   console.log("Adding finance request with data ", financeRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, goal } = financeRequestData;
-    if (title && body && tag && goal) {
+    if (title && body && tag && goal && owner) {
       db.run(
-        "INSERT INTO financeRequests (title, body, link, tag, goal) VALUES (?, ?, ?, ?, ?)",
-        [title, body, link, tag, goal],
+        "INSERT INTO financeRequests (title, body, link, tag, owner, completed, goal) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [title, body, link, tag, owner, false, goal],
         function(err) {
           if (err) {
             console.error('Error inserting financeRequest: ', err);
@@ -385,6 +411,26 @@ const addFinanceRequest = (financeRequestData) => {
     } else {
       reject("Required field(s) not provided");
     }
+  });
+};
+
+// Mark finance request as completed
+const markFinanceRequestCompleted = (id) => {
+  console.log("Marking finance request completed");
+  return new Promise((resolve, reject) => {
+    db.run(
+      "UPDATE financeRequests SET completed = ? WHERE id = ?",
+      [true, id],
+      function(err) {
+        if (err) {
+          console.error('Error completing finance request: ', err);
+          reject(err);
+        } else {
+          const updatedFinanceRequest = getFinanceRequest(id);
+          resolve(updatedFinanceRequest);
+        }
+      }
+    );
   });
 };
 
@@ -421,14 +467,14 @@ const getAllFinanceRequests = () => {
 };
 
 // Add a new item request
-const addItemRequest = (itemRequestData) => {
+const addItemRequest = (owner, itemRequestData) => {
   console.log("Adding item request with data ", itemRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, items } = itemRequestData;
-    if (title && body && tag && items) {
+    if (title && body && tag && items && owner) {
       db.run(
-        "INSERT INTO itemRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
-        [title, body, link, tag],
+        "INSERT INTO itemRequests (title, body, link, tag, owner, completed) VALUES (?, ?, ?, ?, ?, ?)",
+        [title, body, link, tag, owner, false],
         function(err) {
           if (err) {
             console.error('Error inserting itemRequest: ', err);
@@ -457,6 +503,26 @@ const addItemRequest = (itemRequestData) => {
     } else {
       reject("Required field(s) not provided");
     }
+  });
+};
+
+// Mark item request as completed
+const markItemRequestCompleted = (id) => {
+  console.log("Marking item request completed");
+  return new Promise((resolve, reject) => {
+    db.run(
+      "UPDATE itemRequests SET completed = ? WHERE id = ?",
+      [true, id],
+      function(err) {
+        if (err) {
+          console.error('Error completing item request: ', err);
+          reject(err);
+        } else {
+          const updatedItemRequest = getItemRequest(id);
+          resolve(updatedItemRequest);
+        }
+      }
+    );
   });
 };
 
@@ -591,14 +657,17 @@ module.exports = {
   getAllUsers,
   addTimeRequest,
   getTimeRequest,
+  markTimeRequestCompleted,
   getAllTimeRequests,
   getTimeSlot,
   getTimeSlotsByRequest,
   addFinanceRequest,
   getFinanceRequest,
+  markFinanceRequestCompleted,
   getAllFinanceRequests,
   addItemRequest,
   getItemRequest,
+  markItemRequestCompleted,
   getAllItemRequests,
   getItem,
   getItemsByRequest,
