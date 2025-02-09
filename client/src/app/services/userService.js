@@ -18,7 +18,8 @@ export const userService = {
         email: email
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
@@ -33,7 +34,8 @@ export const userService = {
         password: password
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 

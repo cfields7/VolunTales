@@ -2,6 +2,7 @@ const serverPath = "https://cfhc.fly.dev/api";
 
 export const requestsService = {
 
+
   async requestTime(payload) {
     const res = await fetch(serverPath + '/requests/time', {
       method: "POST",
@@ -13,7 +14,8 @@ export const requestsService = {
         timeSlots: payload.timeSlots,
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
@@ -31,7 +33,8 @@ export const requestsService = {
         goal: payload.goal,
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
@@ -49,7 +52,8 @@ export const requestsService = {
         items: payload.items,
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
