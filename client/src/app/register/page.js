@@ -167,7 +167,7 @@ export default function PostPage() {
             <button
               type="button"
               onClick={() => router.push('/')}
-              className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-90"
+              className="px-4 py-2 rounded-md bg-gradient-to-b from-red-500 to-red-600 text-white hover:bg-red-90"
             >
               Cancel
             </button>
@@ -176,10 +176,10 @@ export default function PostPage() {
               onClick={() => handleSubmit()}
               disabled={!isFormValid}
               className={`px-4 py-2 rounded-md transition-colors ${
-                isFormValid ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-gray-500 text-gray-300 cursor-not-allowed'
+                isFormValid ? 'bg-gradient-to-b from-green-400 to-green-500 hover:bg-green-600 text-white' : 'bg-gray-500 text-gray-300 cursor-not-allowed'
               }`}
             >
-              Create User
+              Submit
             </button>
           </div>
           <label className="block text-sm font-medium text-red-700 mb-1">{responseGet}</label>
