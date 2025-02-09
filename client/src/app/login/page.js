@@ -37,7 +37,7 @@ export default function PostPage() {
 
             {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Username <span className="text-red-500">*</span>
               </label>
               <input
@@ -51,7 +51,7 @@ export default function PostPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Password <span className="text-red-500">*</span>
               </label>
               <input

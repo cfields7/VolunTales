@@ -42,7 +42,7 @@ export default function PostPage() {
           <div className="space-y-4">
             {/* First Name */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 First Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -56,7 +56,7 @@ export default function PostPage() {
 
             {/* Last Name */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Last Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -70,7 +70,7 @@ export default function PostPage() {
 
             {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Username <span className="text-red-500">*</span>
               </label>
               <input
@@ -84,7 +84,7 @@ export default function PostPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -98,7 +98,7 @@ export default function PostPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-white-900 mb-1">
+              <label className="block text-sm font-medium text-white mb-1">
                 Email Address <span className="text-gray-400">(optional)</span>
               </label>
               <input
@@ -112,7 +112,7 @@ export default function PostPage() {
 
             {/* Admin */}
             <div className="flex items-center justify-between space-x-4">
-              <label className="text-sm font-medium text-white-900">Set Admin Privledges</label>
+              <label className="text-sm font-medium text-white">Set Admin Privledges</label>
               <input
                 type="checkbox"
                 checked={admin}
