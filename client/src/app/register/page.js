@@ -59,7 +59,7 @@ export default function PostPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Register A New Account</h1>
 
-        <form onSubmit={handleSubmit} className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-lg shadow-md p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-gradient-to-br from-green-900 to-green-950 rounded-lg shadow-md p-6 space-y-6">
           <div className="space-y-4">
             {/* Profile Icons */}
             <div>
@@ -98,7 +98,7 @@ export default function PostPage() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-red-900 focus:border-red-500 bg-indigo-950 text-white"
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-red-900 focus:border-red-500 bg-green-950 text-white"
                   placeholder="Enter first name"
                 />
               </div>
@@ -112,7 +112,7 @@ export default function PostPage() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-green-950 text-white"
                   placeholder="Enter last name"
                 />
               </div>
@@ -128,7 +128,7 @@ export default function PostPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-green-950 text-white"
                 placeholder="Enter username"
               />
             </div>
@@ -142,7 +142,7 @@ export default function PostPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-green-950 text-white"
                 placeholder="Enter password"
               />
             </div>
@@ -156,7 +156,7 @@ export default function PostPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-green-950 text-white"
                 placeholder="Enter email"
               />
             </div>
