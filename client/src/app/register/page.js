@@ -49,7 +49,7 @@ export default function PostPage() {
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter first name"
               />
             </div>
@@ -63,7 +63,7 @@ export default function PostPage() {
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter last name"
               />
             </div>
@@ -77,7 +77,7 @@ export default function PostPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter username"
               />
             </div>
@@ -91,7 +91,7 @@ export default function PostPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter password"
               />
             </div>
@@ -105,7 +105,7 @@ export default function PostPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
                 placeholder="Enter email"
               />
             </div>
@@ -117,7 +117,7 @@ export default function PostPage() {
                 type="checkbox"
                 checked={admin}
                 onChange={(e) => setAdmin(e.target.checked)}
-                className="h-5 w-5 border rounded focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950"
+                className="h-5 w-5 border rounded focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
               />
             </div>
           </div>
