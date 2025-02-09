@@ -229,7 +229,7 @@ export default function RequestAid() {
                         required
                         className="bg-gray-700 text-white p-2 rounded"
                       />
-                      {index > 0 && (
+                      {timeSlots.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeTimeSlot(index)}
@@ -283,7 +283,7 @@ export default function RequestAid() {
                         className="w-full bg-gray-700 text-white p-2 rounded"
                         placeholder="Quantity"
                       />
-                      {index > 0 && (
+                      {items.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeItemSlot(index)}
