@@ -5,7 +5,8 @@ import { volunteerService } from "../services/volunteerService";
 import Link from "next/link";
 import Header from "../components/header";
 import Background from "../components/background";
-import Select from "react-select"; // Use a multi-select component for tags
+import Select from "react-select"; 
+import Footer from "../components/footer"
 
 export default function ItemsAssistancePage() {
   const [itemsData, setItemsData] = useState([]);
@@ -39,8 +40,8 @@ export default function ItemsAssistancePage() {
         selectedTags.length === 0 || selectedTags.some(tag => tag.value === post.tag);
       const statusMatch =
         filterStatus === "all" ||
-        (filterStatus === "open" && !post.complete) ||
-        (filterStatus === "completed" && post.complete);
+        (filterStatus === "open" && !post.completed) ||
+        (filterStatus === "completed" && post.completed);
 
       return tagMatch && statusMatch;
     });
@@ -52,6 +53,7 @@ export default function ItemsAssistancePage() {
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
       <br />
       <br />
       <br />
@@ -62,7 +64,6 @@ export default function ItemsAssistancePage() {
 
         {/* Filters Section */}
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
-          <div className="w-full">
             <h3 className="text-white font-bold mb-2">Filter by Tags</h3>
             <Select
               isMulti
@@ -72,7 +73,7 @@ export default function ItemsAssistancePage() {
               placeholder="Select Tags"
               className="bg-gray-700 text-black rounded-md"
             />
-          </div>
+          
 
           {/* Filter by Completion Status */}
           <div className="mt-4">
@@ -88,6 +89,7 @@ export default function ItemsAssistancePage() {
             </select>
           </div>
         </div>
+
 
         {filteredData.length === 0 ? (
           <p className="text-white text-center">No items posts available.</p>

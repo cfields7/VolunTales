@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { requestsService } from "../services/requestsService";
 import Background from '../components/background';
+import Footer from '../components/footer';
 
 // Utility to create a unique ID.
 const createUniqueId = () => Date.now() + Math.random();
@@ -104,6 +105,7 @@ export default function RequestAid() {
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
       <br /><br /><br />
       <div className="max-w-6xl mx-auto space-y-12 py-12">
         <h1 className="text-4xl font-bold text-white text-center">Request Assistance</h1>

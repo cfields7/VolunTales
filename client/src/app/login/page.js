@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { userService } from '../services/userService';
 import Background from '../components/background';
+import Footer from '../components/footer';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,6 +39,7 @@ export default function LoginPage() {
   return (
     <div>
        <Background />
+       <Footer />
        <br />
        <br />
       <div className="max-w-4xl mx-auto">

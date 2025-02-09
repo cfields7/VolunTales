@@ -2,12 +2,13 @@
 import Header from '../components/header';
 import Link from 'next/link';
 import Background from '../components/background';
-
+import Footer from '../components/footer';
 export default function Volunteer() {
   return (
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
         <br />
         <br />
         <br />

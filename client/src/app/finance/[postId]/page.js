@@ -18,7 +18,7 @@ export default function FullPostPage() {
         const res = await volunteerService.getPostById(postId, "finance");
         const data = await res.json();
         setPost(data);
-        if (data.isOwner) {
+        if (data.owner) {
           setOwner(true);
         }
       } catch (error) {
@@ -117,7 +117,7 @@ export default function FullPostPage() {
             Visit Link
           </a>
         )}
-        {isOwner && !post.complete && (
+        {isOwner && !post.completed && (
           <button
             type="button"
             onClick={handleMarkComplete}
@@ -126,10 +126,8 @@ export default function FullPostPage() {
             Mark Complete
           </button>
         )}
-        {post.complete && (
-          <div className="mt-4 text-green-500 font-bold">
-            Post is marked as complete.
-          </div>
+        {post.completed && (
+          <div className="text-gray-400">This post has been marked completed.</div>
         )}
         {/* Comments Section */}
         <div className="mt-8">
@@ -138,7 +136,7 @@ export default function FullPostPage() {
           </h2>
 
           {/* Conditional rendering of comment form */}
-          {!post.complete ? (
+          {!post.completed ? (
             <form onSubmit={handleSubmitComment} className="mb-8">
               <textarea
                 value={newComment}
@@ -155,8 +153,8 @@ export default function FullPostPage() {
               </button>
             </form>
           ) : (
-            <div className="text-gray-400">Comments are disabled for this post.</div>
-          )}
+            <div />
+          )} 
 
           {/* Comments List */}
           <div className="space-y-6">

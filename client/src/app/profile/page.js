@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { profileService } from '../services/profileService';
 import Background from '../components/background';
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState({
@@ -68,6 +69,7 @@ export default function ProfilePage() {
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
       <div className="max-w-6xl mx-auto pt-24 px-4">
         <div className="bg-gray-800 rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold text-white text-center mb-8">Your Profile</h1>

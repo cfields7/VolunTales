@@ -7,6 +7,7 @@ import Background from './components/background';
 import { profileService } from './services/profileService';
 import { User, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Footer from './components/footer';
 
 export default function Home() {
   const router = useRouter();
@@ -49,6 +50,7 @@ export default function Home() {
 
   return (
     <div> 
+      <Footer />
       <Background />
 
          <motion.div 

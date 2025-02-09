@@ -5,6 +5,8 @@ import { useParams } from "next/navigation"; // For Next.js 13 App Router; if us
 import Header from "../../components/header";
 import Background from "../../components/background";
 import { volunteerService } from "../../services/volunteerService";
+import { requestsService } from "@/app/services/requestsService";
+import Footer from "@/app/components/footer";
 
 export default function FullPostPage() {
   const { postId } = useParams();
@@ -18,7 +20,7 @@ export default function FullPostPage() {
         const res = await volunteerService.getPostById(postId, "item");
         const data = await res.json();
         setPost(data);
-        if (data.isOwner) {
+        if (data.owner) {
           setOwner(true);
         }
       } catch (error) {
@@ -41,10 +43,13 @@ export default function FullPostPage() {
 
   const handleMarkComplete = async () => {
       try {
-        await requestsService.markComplete(post.id, "finance");
+        await requestsService.markComplete(post.id, "item");
+  
         // Fetch updated post after marking complete
-        const res = await volunteerService.getPostById(postId, "finance");
+        const res = await volunteerService.getPostById(postId, "item");
+   
         const updatedPost = await res.json();
+     
         setPost(updatedPost);
       } catch (error) {
         console.error("Error marking post as complete:", error);
@@ -84,6 +89,7 @@ export default function FullPostPage() {
     <div className="min-h-screen bg-gray-900">
       <Header />
       <Background />
+      {/* <Footer /> */}
       <br />
       <br />
       <br />
@@ -112,7 +118,7 @@ export default function FullPostPage() {
             Visit Link
           </a>
         )}
-        {isOwner && !post.complete && (
+        {isOwner && !post.completed && (
           <button
             type="button"
             onClick={handleMarkComplete}
@@ -121,17 +127,15 @@ export default function FullPostPage() {
             Mark Complete
           </button>
         )}
-        {post.complete && (
-          <div className="mt-4 text-green-500 font-bold">
-            Post is marked as complete.
-          </div>
+        {post.completed && (
+          <div className="text-gray-400">This post has been marked completed.</div>
         )}
       {/* Comments Section */}
       <div className="mt-8">
           <h2 className="text-2xl font-bold mb-6">Comments ({post.comments?.length || 0})</h2>
           
           {/* Conditional rendering of comment form */}
-          {!post.complete ? (
+          {!post.completed ? (
             <form onSubmit={handleSubmitComment} className="mb-8">
               <textarea
                 value={newComment}
@@ -148,7 +152,7 @@ export default function FullPostPage() {
               </button>
             </form>
           ) : (
-            <div className="text-gray-400">Comments are disabled for this post.</div>
+            <div />
           )}
           
           {/* Comments List */}

@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation"; // For Next.js 13 App Ro
 import Header from "../../components/header";
 import Background from "../../components/background";
 import { volunteerService } from "../../services/volunteerService";
+import { requestsService } from "@/app/services/requestsService";
 
 
 export default function FullPostPage() {
@@ -20,7 +21,7 @@ export default function FullPostPage() {
         const res = await volunteerService.getPostById(postId, "time");
         const data = await res.json();
         setPost(data);
-        if (data.isOwner) {
+        if (data.owner) {
           setOwner(true);
         }
       } catch (error) {
@@ -43,10 +44,11 @@ export default function FullPostPage() {
 
     const handleMarkComplete = async () => {
       try {
-        await requestsService.markComplete(post.id, "finance");
+        await requestsService.markComplete(post.id, "time");
         // Fetch updated post after marking complete
-        const res = await volunteerService.getPostById(postId, "finance");
+        const res = await volunteerService.getPostById(postId, "time");
         const updatedPost = await res.json();
+        console.log(updatedPost)
         setPost(updatedPost);
       } catch (error) {
         console.error("Error marking post as complete:", error);
@@ -114,7 +116,7 @@ export default function FullPostPage() {
             Visit Link
           </a>
         )}
-        {isOwner && !post.complete && (
+        {isOwner && !post.completed && (
           <button
             type="button"
             onClick={handleMarkComplete}
@@ -123,17 +125,15 @@ export default function FullPostPage() {
             Mark Complete
           </button>
         )}
-        {post.complete && (
-          <div className="mt-4 text-green-500 font-bold">
-            Post is marked as complete.
-          </div>
+        {post.completed==1 && (
+          <div className="text-gray-400">This post has been marked completed.</div>
         )}
       {/* Comments Section */}
       <div className="mt-8">
           <h2 className="text-2xl font-bold mb-6">Comments ({post.comments?.length || 0})</h2>
           
           {/* Conditional rendering of comment form */}
-          {!post.complete ? (
+          {!post.completed ? (
             <form onSubmit={handleSubmitComment} className="mb-8">
               <textarea
                 value={newComment}
@@ -150,7 +150,7 @@ export default function FullPostPage() {
               </button>
             </form>
           ) : (
-            <div className="text-gray-400">Comments are disabled for this post.</div>
+            <div />
           )}
 
           {/* Comments List */}

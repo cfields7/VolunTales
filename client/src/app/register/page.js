@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { userService } from '../services/userService';
 import Background from '../components/background';
 import LoginPage from '../login/page';
+import Footer from '../components/footer';
 
 export default function PostPage() {
   const router = useRouter();
@@ -54,6 +55,7 @@ export default function PostPage() {
   return (
     <div>
         <Background />
+        <Footer />
       <br />
       <br />
       <div className="max-w-4xl mx-auto">

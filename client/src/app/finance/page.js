@@ -5,7 +5,8 @@ import { volunteerService } from "../services/volunteerService";
 import Link from "next/link";
 import Header from "../components/header";
 import Background from "../components/background";
-import Select from "react-select"; // Multi-select component for tags
+import Select from "react-select"; 
+import Footer from "../components/footer";
 
 export default function FinanceAssistancePage() {
   const [financeData, setFinanceData] = useState([]);
@@ -58,6 +59,7 @@ export default function FinanceAssistancePage() {
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
       <br />
       <br />
       <br />

@@ -3,6 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Background from '../components/background';
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 const HomePage = () => {
   const router = useRouter();
@@ -11,6 +12,7 @@ const HomePage = () => {
     <div>
       <Header />
       <Background />
+      {/* <Footer /> */}
       <br />
       <br />
       <br />
