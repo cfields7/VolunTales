@@ -50,8 +50,7 @@ export default function Home() {
   return (
     <div> 
       <Background />
-         <br />
-         <br />
+
          <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

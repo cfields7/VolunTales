@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
+import { profileService } from '../services/profileService';
 
 const menuItems = [
   { name: "Home", path: "/home" },
@@ -21,10 +22,15 @@ const Header = () => {
     // Check if the token exists in localStorage
     const token = localStorage.getItem('token');
     
-    // If no token, redirect to home page (or login page)
-    if (!token) {
-      router.push('/'); // Redirect to home page
+    const seeifyouhaveaccess = async () => {
+    profileService.getUserData().then(response => {
+        if (!response.ok) {
+          router.push('/'); // Redirect to home page
+        }
+    });
     }
+
+    seeifyouhaveaccess();
   }, [router]); 
 
   const toggleMenu = () => {
