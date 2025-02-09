@@ -1,5 +1,6 @@
 "use client";
 import Header from '../components/header';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { requestsService } from "../services/requestsService";
 import Background from '../components/background';
@@ -8,6 +9,7 @@ import Background from '../components/background';
 const createUniqueId = () => Date.now() + Math.random();
 
 export default function RequestAid() {
+  const router = useRouter();
   const [selectedAidType, setSelectedAidType] = useState(null);
 
   const [timeSlots, setTimeSlots] = useState([{ id: createUniqueId() }]);
@@ -52,21 +54,42 @@ export default function RequestAid() {
         start: formData.get(`timeSlotStart-${slot.id}`),
         end: formData.get(`timeSlotEnd-${slot.id}`)
       }));
-      requestsService.requestTime(payload)
+      requestsService.requestTime(payload).then(data => {
+          return data.json()
+      }
+    )
+    .then(data => {
+      router.push(`/times/${data.id}`);
+  });
+    
     }
 
     if (selectedAidType === 'money') {
       payload.goal = formData.get("goal");
-      requestsService.requestFinance(payload)
+      requestsService.requestFinance(payload).then(data => {
+        return data.json()
     }
+  )
+  .then(data => {
+    router.push(`/finance/${data.id}`);
+});
+  
+  }
 
     if (selectedAidType === 'items') {
       payload.items = items.map((item) => ({
         name: formData.get(`item-${item.id}`),
         quantity: formData.get(`itemQuantity-${item.id}`)
       }));
-      requestsService.requestTime(payload)
+      requestsService.requestItems(payload).then(data => {
+        return data.json()
     }
+  )
+  .then(data => {
+    router.push(`/items/${data.id}`);
+});
+  
+  }
 
     console.log(payload);
     // Close the modal after submission.

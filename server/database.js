@@ -264,7 +264,7 @@ const addTimeRequest = (timeRequestData) => {
   console.log("Adding time request with data ", timeRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, timeSlots } = timeRequestData;
-    if (title && body && link && tag && timeSlots) {
+    if (title && body && tag && timeSlots) {
       db.run(
         "INSERT INTO timeRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
         [title, body, link, tag],
@@ -368,7 +368,7 @@ const addFinanceRequest = (financeRequestData) => {
   console.log("Adding finance request with data ", financeRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, goal } = financeRequestData;
-    if (title && body && link && tag && goal) {
+    if (title && body && tag && goal) {
       db.run(
         "INSERT INTO financeRequests (title, body, link, tag, goal) VALUES (?, ?, ?, ?, ?)",
         [title, body, link, tag, goal],
@@ -425,7 +425,7 @@ const addItemRequest = (itemRequestData) => {
   console.log("Adding item request with data ", itemRequestData);
   return new Promise((resolve, reject) => {
     const { title, body, link, tag, items } = itemRequestData;
-    if (title && body && link && tag && items) {
+    if (title && body && tag && items) {
       db.run(
         "INSERT INTO itemRequests (title, body, link, tag) VALUES (?, ?, ?, ?)",
         [title, body, link, tag],
