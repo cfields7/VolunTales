@@ -294,11 +294,10 @@ export default function RequestAid() {
                   className="w-full bg-gray-700 text-white p-2 rounded mb-2"
                   defaultValue=""
                 >
-                  <option value="">Select a predefined tag</option>
+                  <option value="custom">Custom</option>
                   <option value="time">Time</option>
                   <option value="money">Money</option>
                   <option value="items">Items</option>
-                  <option value="custom">Custom</option> {/* Custom option */}
                 </select>
 
                 {/* Custom Tag Input */}
