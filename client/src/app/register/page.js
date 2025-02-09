@@ -22,9 +22,14 @@ export default function PostPage() {
   const handleSubmit = () => {
     if (isFormValid) {
 
-      userService.addUser(firstName, lastName, username, password, admin, email).then(users => { // change to look for success
-        setResponseGet("Post Success");
-        router.push('/volunteer'); // change later
+      userService.addUser(firstName, lastName, username, password, admin, email).then(response => {
+        if (response.ok) {
+          setResponseGet("Post Success");
+          router.push('/volunteer'); // change later
+        } else {
+          console.log(response);
+          alert("Error: " + response.json().error);
+        }
       });
       
 

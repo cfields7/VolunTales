@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config()
 
 const app = express();
 const router = express.Router();
@@ -18,17 +21,45 @@ database.init();
 
 // Add new user
 router.route('/users').post(async (req, res) => {
+  const loginUser = req.body;
   try {
+    let dbUser;
+    if (loginUser.username) {
+      dbUser = await database.getUserByUsername(loginUser.username);
+    }
+    if (dbUser) {
+      res.status(400).json({ error: "User already exists" });
+      return
+    }
     // Add user to database
     const userAdded = await database.addUser(req.body);
     res.json(userAdded);
   } catch (error) {
     console.error('Error adding user:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
 // Login user
+router.route('/login').post(async (req, res) => {
+  const loginUser = req.body;
+  try {
+    let dbUser;
+    if (loginUser.username) {
+      dbUser = await database.getUserByUsername(loginUser.username);
+    }
+    if (dbUser && loginUser.password && dbUser.password == loginUser.password) {
+      res.json({
+        success: true
+      });
+    } else {
+      res.status(500).json({ error: "Invalid login information" });
+    }
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    res.status(500).json({ error: error });
+  }
+});
 
 // Get all users
 router.route('/users').get(async (req, res) => {
@@ -37,7 +68,7 @@ router.route('/users').get(async (req, res) => {
     res.json(users)
   } catch (error) {
     console.error('Error getting all users:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

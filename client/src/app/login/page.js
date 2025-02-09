@@ -17,9 +17,13 @@ export default function PostPage() {
     
   const handleSubmit = () => {
     if (username && password) {
-      userService.loginUser(username, password).then(users => { // change to look for success
-        setResponseGet("Post Success");
-        router.push('/volunteer'); // change later
+      userService.loginUser(username, password).then(response => {
+        if (response.ok) {
+          setResponseGet("Post Success");
+          router.push('/volunteer'); // change later
+        } else {
+          alert("Invalid Credentials")
+        }
       });
     }
   };
