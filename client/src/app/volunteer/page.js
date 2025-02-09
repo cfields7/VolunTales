@@ -13,7 +13,7 @@ export default function Volunteer() {
         <br />
         <br />
         <div className="max-w-6xl mx-auto space-y-12">
-          <h1 className="text-4xl font-bold text-white text-center">Welcome Volunteers!</h1>
+          <h1 className="text-4xl font-bold text-white text-center">Welcome Voluntalers!</h1>
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Section - Large */}
@@ -21,7 +21,7 @@ export default function Volunteer() {
               <h2 className="text-2xl font-semibold text-center mb-4">Everything Counts!</h2>
               <p className="text-m mb-4 text-center"><i>How Will You Make an Impact Today?</i></p>
               <p className="text-center">
-              <span className='text-red-500'>VolunTales</span> is here to help you make a real difference! Discover opportunities that align with your unique skills, experience, and availability. Choose one of the options on the right and embark on a rewarding adventure of giving back and transforming lives.
+              <span className='text-purple-500'>VolunTales</span> is here to help you make a real difference! Discover opportunities that align with your unique skills, experience, and availability. Choose one of the options on the right and embark on a rewarding adventure of giving back and transforming lives.
                 <br />
                 Choose one of the options on the right to get started.
               </p>
