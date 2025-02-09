@@ -49,5 +49,21 @@ export const volunteerService = {
     return Promise.resolve(res);
   },
 
+  async postComment(postId, newComment, date, service) {
+    const res = await fetch(serverPath + `/comments/${service}`, {
+        method: "POST",
+        body: JSON.stringify({
+          requestId: postId,
+          message: newComment,
+          datePosted: date,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+    return Promise.resolve(res);
+  },
 
 }
