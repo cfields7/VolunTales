@@ -3,12 +3,13 @@ import Header from '../components/header';
 import { useState } from 'react';
 import Background from '../components/background';
 
+// Utility to create a unique ID.
+const createUniqueId = () => Date.now() + Math.random();
+
 export default function RequestAid() {
   const [selectedAidType, setSelectedAidType] = useState(null);
-  // These arrays drive the number of input fields for time slots and items.
-  const [timeSlots, setTimeSlots] = useState(['']);
-  const [items, setItems] = useState(['']);
-  // Controls whether the modal (popup) form is open.
+
+  const [items, setItems] = useState([{ id: createUniqueId() }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // When an aid type is selected, set the type and open the modal.
@@ -17,82 +18,69 @@ export default function RequestAid() {
     setIsModalOpen(true);
   };
 
-  // Remove a time slot if there’s more than one.
-  const removeTimeSlot = (indexToRemove) => {
+  // Remove a time slot by its unique id.
+  const removeTimeSlot = (idToRemove) => {
     if (timeSlots.length > 1) {
-      setTimeSlots(timeSlots.filter((_, index) => index !== indexToRemove));
+      setTimeSlots(timeSlots.filter((slot) => slot.id !== idToRemove));
     }
   };
 
-    // Remove a item slot if there’s more than one.
-    const removeItemSlot = (indexToRemove) => {
-      if (items.length > 1) {
-        setItems(items.filter((_, index) => index !== indexToRemove));
-      }
-    };
+  // Remove an item slot by its unique id.
+  const removeItemSlot = (idToRemove) => {
+    if (items.length > 1) {
+      setItems(items.filter((item) => item.id !== idToRemove));
+    }
+  };
 
   // Form submission – build a nested payload based on the selected aid type.
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    // Get the new link, plus title and description.
+    // Get the link, title, and description.
     const link = formData.get("link");
     const title = formData.get("title");
     const body = formData.get("body");
 
     let payload = { link, title, body };
 
-    // send time request.
     if (selectedAidType === 'time') {
-      payload.timeSlots = [];
-      for (let i = 0; i < timeSlots.length; i++) {
-        const start = formData.get(`timeSlotStart-${i}`);
-        const end = formData.get(`timeSlotEnd-${i}`);
-        payload.timeSlots.push({ start, end });
-      }
-      requestsService.requestTime(payload)
+      payload.timeSlots = timeSlots.map((slot) => ({
+        start: formData.get(`timeSlotStart-${slot.id}`),
+        end: formData.get(`timeSlotEnd-${slot.id}`)
+      }));
+      // Example: requestsService.requestTime(payload)
     }
 
-    // Send finance request.
     if (selectedAidType === 'money') {
       payload.goal = formData.get("goal");
-      requestsService.requestFinance(payload)
+      // Example: requestsService.requestFinance(payload)
     }
 
-    // Send item request.
     if (selectedAidType === 'items') {
-      payload.items = [];
-      for (let i = 0; i < items.length; i++) {
-        const name = formData.get(`item-${i}`);
-        const quantity = formData.get(`itemQuantity-${i}`);
-        payload.items.push({ name, quantity });
-      }
-      requestsService.requestTime(payload)
+      payload.items = items.map((item) => ({
+        name: formData.get(`item-${item.id}`),
+        quantity: formData.get(`itemQuantity-${item.id}`)
+      }));
+      // Example: requestsService.requestTime(payload)
     }
 
     console.log(payload);
-
-
-
-    //  close the modal (on success, to change)
+    // Close the modal after submission.
     setIsModalOpen(false);
-    // also direct to new page with post after success?
   };
 
-  const addTimeSlot = () => setTimeSlots([...timeSlots, '']);
-  const addItem = () => setItems([...items, '']);
+  // Functions to add additional fields.
+  const addTimeSlot = () => setTimeSlots([...timeSlots, { id: createUniqueId() }]);
+  const addItem = () => setItems([...items, { id: createUniqueId() }]);
 
   return (
     <div>
       <Header />
       <Background />
-      <br />
-      <br />
-      <br />
+      <br /><br /><br />
       <div className="max-w-6xl mx-auto space-y-12 py-12">
         <h1 className="text-4xl font-bold text-white text-center">Request Assistance</h1>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Section */}
           <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
@@ -112,9 +100,7 @@ export default function RequestAid() {
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">
-                  🕒
-                </div>
+                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
                 <div>
                   <h3 className="text-xl font-semibold">Request Time Assistance</h3>
                   <p className="text-sm">Need volunteers for specific time slots</p>
@@ -127,9 +113,7 @@ export default function RequestAid() {
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">
-                  💵
-                </div>
+                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
                 <div>
                   <h3 className="text-xl font-semibold">Request Financial Assistance</h3>
                   <p className="text-sm">Set up a financial goal for your needs</p>
@@ -142,9 +126,7 @@ export default function RequestAid() {
               className="w-full bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">
-                  📦
-                </div>
+                <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">📦</div>
                 <div>
                   <h3 className="text-xl font-semibold">Request Items</h3>
                   <p className="text-sm">List specific items you need donated</p>
@@ -213,26 +195,26 @@ export default function RequestAid() {
               {selectedAidType === 'time' && (
                 <div>
                   <label className="block text-white mb-2">Time Slots Needed</label>
-                  {timeSlots.map((_, index) => (
-                    <div key={index} className="flex items-center space-x-2 mb-2">
+                  {timeSlots.map((slot, index) => (
+                    <div key={slot.id} className="flex items-center space-x-2 mb-2">
                       <span className="text-white">Start:</span>
                       <input
                         type="datetime-local"
-                        name={`timeSlotStart-${index}`}
+                        name={`timeSlotStart-${slot.id}`}
                         required
                         className="bg-gray-700 text-white p-2 rounded"
                       />
                       <span className="text-white">End:</span>
                       <input
                         type="datetime-local"
-                        name={`timeSlotEnd-${index}`}
+                        name={`timeSlotEnd-${slot.id}`}
                         required
                         className="bg-gray-700 text-white p-2 rounded"
                       />
                       {timeSlots.length > 1 && (
                         <button
                           type="button"
-                          onClick={() => removeTimeSlot(index)}
+                          onClick={() => removeTimeSlot(slot.id)}
                           className="text-red-500 hover:text-red-400"
                         >
                           Delete
@@ -266,18 +248,18 @@ export default function RequestAid() {
               {selectedAidType === 'items' && (
                 <div>
                   <label className="block text-white mb-2">Items Needed</label>
-                  {items.map((_, index) => (
-                    <div key={index} className="flex space-x-2 mb-2">
+                  {items.map((item, index) => (
+                    <div key={item.id} className="flex space-x-2 mb-2">
                       <input
                         type="text"
-                        name={`item-${index}`}
+                        name={`item-${item.id}`}
                         required
                         className="w-full bg-gray-700 text-white p-2 rounded"
                         placeholder="Item name"
                       />
                       <input
                         type="number"
-                        name={`itemQuantity-${index}`}
+                        name={`itemQuantity-${item.id}`}
                         required
                         min="1"
                         className="w-full bg-gray-700 text-white p-2 rounded"
@@ -286,7 +268,7 @@ export default function RequestAid() {
                       {items.length > 1 && (
                         <button
                           type="button"
-                          onClick={() => removeItemSlot(index)}
+                          onClick={() => removeItemSlot(item.id)}
                           className="text-red-500 hover:text-red-400"
                         >
                           Delete
