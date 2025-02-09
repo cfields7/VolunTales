@@ -17,6 +17,13 @@ export default function RequestAid() {
     setIsModalOpen(true);
   };
 
+  // Remove a time slot if there’s more than one.
+  const removeTimeSlot = (indexToRemove) => {
+    if (timeSlots.length > 1) {
+      setTimeSlots(timeSlots.filter((_, index) => index !== indexToRemove));
+    }
+  };
+
   // Form submission – build a nested payload based on the selected aid type.
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -140,13 +147,13 @@ export default function RequestAid() {
       {/* Modal Popup for the Request Form */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          {/* Backdrop – clicking here will close the modal */}
+          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black opacity-50"
             onClick={() => setIsModalOpen(false)}
           ></div>
           {/* Modal Content */}
-          <div className="bg-gray-800 p-6 rounded-2xl shadow-lg z-50 max-w-lg w-full relative">
+          <div className="bg-gray-800 p-6 rounded-2xl shadow-lg z-50 max-w-2xl w-full relative">
             {/* Close Button */}
             <button
               className="absolute top-2 right-2 text-white text-2xl"
@@ -196,21 +203,30 @@ export default function RequestAid() {
                 <div>
                   <label className="block text-white mb-2">Time Slots Needed</label>
                   {timeSlots.map((_, index) => (
-                    <div key={index} className="flex flex-col space-y-2 mb-2">
+                    <div key={index} className="flex items-center space-x-2 mb-2">
+                      <span className="text-white">Start:</span>
                       <input
                         type="datetime-local"
                         name={`timeSlotStart-${index}`}
                         required
-                        className="w-full bg-gray-700 text-white p-2 rounded"
-                        placeholder="Start Time"
+                        className="bg-gray-700 text-white p-2 rounded"
                       />
+                      <span className="text-white">End:</span>
                       <input
                         type="datetime-local"
                         name={`timeSlotEnd-${index}`}
                         required
-                        className="w-full bg-gray-700 text-white p-2 rounded"
-                        placeholder="End Time"
+                        className="bg-gray-700 text-white p-2 rounded"
                       />
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => removeTimeSlot(index)}
+                          className="text-red-500 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   ))}
                   <button
