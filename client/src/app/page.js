@@ -48,7 +48,7 @@ export default function Home() {
         <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-full bg-gradient-to-b from-purple-500 to-purple-800 text-white p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-purple-600 hover:to-purple-900 transition-all"
+        className="w-full bg-gradient-to-b from-indigo-200 to-indigo-300 text-black p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-indigo-300 hover:to-indigo-400 transition-all"
         onClick={() => {
             doLogin();
           }}
@@ -60,7 +60,7 @@ export default function Home() {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-full bg-gradient-to-b from-green-500 to-green-800 text-white p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-green-600 hover:to-green-800 transition-all"
+        className="w-full bg-gradient-to-b from-indigo-300 to-indigo-400 text-black p-6 rounded-lg shadow-lg flex items-center justify-center space-x-3 hover:from-indigo-400 hover:to-indigo-500 transition-all"
         onClick={() => handleRegister()}
       >
         <UserPlus className="w-6 h-6" />
