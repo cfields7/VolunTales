@@ -45,7 +45,7 @@ export default function RequestAid() {
     const body = formData.get("body");
     const tag = formData.get("tag");
 
-    let payload = { link, title, body };
+    let payload = { link, title, body, tag };
 
     if (selectedAidType === 'time') {
       payload.timeSlots = timeSlots.map((slot) => ({
