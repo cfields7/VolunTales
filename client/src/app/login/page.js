@@ -21,7 +21,7 @@ export default function LoginPage() {
       userService.loginUser(username, password).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
-          router.push('/home'); // change later
+          router.push('/volunteer'); // change later
         } else {
           alert("Invalid Credentials")
         }

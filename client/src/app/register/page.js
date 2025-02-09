@@ -25,6 +25,7 @@ export default function PostPage() {
       userService.addUser(firstName, lastName, username, password, email).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
+          localStorage.setItem("token", response.token);
           router.push('/home'); // change later
         } else {
           alert("Error: Username Already Exists.");
