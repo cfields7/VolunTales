@@ -103,6 +103,7 @@ export default function FullPostPage() {
                     <span className="font-bold">Quantity:</span> {item.quantity}
                   </div>
                 ))}
+                <br />
         {post.link && (
           <a
             href={post.link}

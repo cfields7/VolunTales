@@ -108,6 +108,7 @@ export default function ItemsAssistancePage() {
                     <span className="font-bold">Quantity:</span> {item.quantity}
                   </div>
                 ))}
+                <br />
               {post.link && (
                 <a
                   href={post.link}

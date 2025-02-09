@@ -116,6 +116,7 @@ export default function FullPostPage() {
             Visit Link
           </a>
         )}
+        <br />
         {isOwner && !post.completed && (
           <button
             type="button"
@@ -125,6 +126,7 @@ export default function FullPostPage() {
             Mark Complete
           </button>
         )}
+         <br />
         {post.completed==1 && (
           <div className="text-gray-400">This post has been marked completed.</div>
         )}
