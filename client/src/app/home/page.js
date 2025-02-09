@@ -148,7 +148,25 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4 text-white">Environmental</h2>
             <ul className="space-y-3">
               <li>
-                <a href="https://raleighcityfarm.org/volunteer" className="text-blue-500 hover:underline block">
+                <a href="https://raleighnc.gov/stormwater/services/stormwater-volunteering" className="text-blue-600 hover:underline block">
+                  <div className="font-medium">Stormwater Volunteering</div>
+                  <div className="text-sm text-gray-300">City of Raleigh</div>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ncdot.gov/initiatives-policies/environmental/Pages/default.aspx" className="text-blue-600 hover:underline block">
+                  <div className="font-medium">Environmental Initiatives</div>
+                  <div className="text-sm text-gray-300">NCDOT</div>
+                </a>
+              </li>
+              <li>
+                <a href="https://sustainability.ncsu.edu/get-involved/service-opportunities/" className="text-blue-600 hover:underline block">
+                  <div className="font-medium">Sustainability </div>
+                  <div className="text-sm text-gray-300">NC State University</div>
+                </a>
+              </li>
+              <li>
+                <a href="https://raleighcityfarm.org/volunteer" className="text-blue-600 hover:underline block">
                   <div className="font-medium">Raleigh City Farm</div>
                   <div className="text-sm text-gray-300">Urban Farming Initiative</div>
                 </a>
