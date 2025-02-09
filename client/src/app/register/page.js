@@ -27,8 +27,7 @@ export default function PostPage() {
           setResponseGet("Post Success");
           router.push('/volunteer'); // change later
         } else {
-          console.log(response);
-          alert("Error: " + response.json().error);
+          alert("Error: Username Already Exists.");
         }
       });
       
