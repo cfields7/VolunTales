@@ -80,7 +80,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => router.push('/')}
-              className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-90"
+              className="px-4 py-2 rounded-md bg-gradient-to-b from-red-400 to-red-500 text-white hover:bg-red-90"
             >
               Cancel
             </button>
@@ -89,7 +89,7 @@ export default function LoginPage() {
               onClick={() => handleSubmit(username, password)}
               disabled={!isFormValid}
               className={`px-4 py-2 rounded-md transition-colors ${
-                isFormValid ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-gray-500 text-gray-300 cursor-not-allowed'
+                isFormValid ? 'bg-gradient-to-b from-green-500 to-green-600 hover:bg-green-600 text-white' : 'bg-gray-500 text-gray-300 cursor-not-allowed'
               }`}
             >
               Login
