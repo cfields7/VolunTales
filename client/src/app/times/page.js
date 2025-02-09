@@ -16,6 +16,7 @@ export default function TimeAssistancePage() {
   const [selectedTags, setSelectedTags] = useState([]); // Tracks selected tags for filtering
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [filterStatus, setFilterStatus] = useState("open"); 
 
   useEffect(() => {
     async function fetchTimeData() {
@@ -94,6 +95,18 @@ export default function TimeAssistancePage() {
                 placeholder="Select Tags"
               />
             </div>
+            <div className="mt-4">
+            <h3 className="text-white font-bold mb-2">Filter by Status</h3>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="bg-gray-700 text-white rounded-md p-2"
+            >
+              <option value="open">Open Posts</option>
+              <option value="completed">Completed Posts</option>
+              <option value="all">All Posts</option>
+            </select>
+          </div>
 
             {/* Date Range Picker */}
             <div className="w-full md:w-1/2">

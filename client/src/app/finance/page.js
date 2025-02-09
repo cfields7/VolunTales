@@ -12,6 +12,7 @@ export default function FinanceAssistancePage() {
   const [filteredData, setFilteredData] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [filterStatus, setFilterStatus] = useState("open"); // Filter status for showing all, open, or completed posts
 
   useEffect(() => {
     async function fetchFinanceData() {
@@ -22,8 +23,8 @@ export default function FinanceAssistancePage() {
         setFilteredData(data);
 
         // Extract unique tags from the fetched data
-        const allTags = Array.from(new Set(data.flatMap(post => post.tag || [])));
-        setTags(allTags.map(tag => ({ label: tag, value: tag })));
+        const allTags = Array.from(new Set(data.flatMap((post) => post.tag || [])));
+        setTags(allTags.map((tag) => ({ label: tag, value: tag })));
       } catch (error) {
         console.error("Error fetching finance data:", error);
       }
@@ -31,15 +32,27 @@ export default function FinanceAssistancePage() {
     fetchFinanceData();
   }, []);
 
-  // Filter the posts by selected tags
+  // Filter the posts by selected tags and completion status
   useEffect(() => {
-    const filteredPosts = financeData.filter(post => {
-      if (selectedTags.length === 0) return true; // No tag selected, show all posts
-      return selectedTags.some(tag => tag.value === post.tag); // Filter by selected tag
+    const filteredPosts = financeData.filter((post) => {
+      const tagMatch =
+        selectedTags.length === 0 || selectedTags.some((tag) => tag.value === post.tag);
+      const statusMatch =
+        filterStatus === "all" ||
+        (filterStatus === "open" && !post.complete) ||
+        (filterStatus === "complete" && post.complete);
+      return tagMatch && statusMatch;
     });
 
     setFilteredData(filteredPosts);
-  }, [selectedTags, financeData]);
+  }, [selectedTags, filterStatus, financeData]);
+
+  // Filter options for post status
+  const statusOptions = [
+    { value: "all", label: "All Posts" },
+    { value: "open", label: "Open Posts" },
+    { value: "complete", label: "Completed Posts" },
+  ];
 
   return (
     <div>
@@ -66,6 +79,19 @@ export default function FinanceAssistancePage() {
               className="bg-gray-700 text-black rounded-md"
             />
           </div>
+
+          <div className="mt-4">
+            <h3 className="text-white font-bold mb-2">Filter by Status</h3>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="bg-gray-700 text-white rounded-md p-2"
+            >
+              <option value="open">Open Posts</option>
+              <option value="completed">Completed Posts</option>
+              <option value="all">All Posts</option>
+            </select>
+          </div>
         </div>
 
         {filteredData.length === 0 ? (
@@ -81,7 +107,10 @@ export default function FinanceAssistancePage() {
               <div className="mt-2">
                 <span className="font-bold">Financial Goal:</span> ${post.goal}
               </div>
-              <div className="flex space-x-4">
+              {post.complete && (
+                <div className="mt-2 text-green-400 font-bold">Marked as Complete</div>
+              )}
+              <div className="flex space-x-4 mt-4">
                 {post.link && (
                   <a
                     href={post.link}

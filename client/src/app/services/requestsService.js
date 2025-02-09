@@ -58,6 +58,17 @@ export const requestsService = {
     });
 
     return Promise.resolve(res);
-  }
+  },
+
+  async markComplete(postId, service) {
+    const res = await fetch(serverPath + `/requests/${service}/${postId}/complete`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    return Promise.resolve(res);
+  },
 
 }

@@ -10,6 +10,7 @@ export default function FullPostPage() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState("");
+  const [isOwner, setOwner] = useState(false);
 
   useEffect(() => {
     async function fetchPost() {
@@ -17,6 +18,9 @@ export default function FullPostPage() {
         const res = await volunteerService.getPostById(postId, "item");
         const data = await res.json();
         setPost(data);
+        if (data.isOwner) {
+          setOwner(true);
+        }
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -34,6 +38,18 @@ export default function FullPostPage() {
     };
     return new Date(dateTimeStr).toLocaleString(undefined, options);
   };
+
+  const handleMarkComplete = async () => {
+      try {
+        await requestsService.markComplete(post.id, "finance");
+        // Fetch updated post after marking complete
+        const res = await volunteerService.getPostById(postId, "finance");
+        const updatedPost = await res.json();
+        setPost(updatedPost);
+      } catch (error) {
+        console.error("Error marking post as complete:", error);
+      }
+    };
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -96,27 +112,45 @@ export default function FullPostPage() {
             Visit Link
           </a>
         )}
+        {isOwner && !post.complete && (
+          <button
+            type="button"
+            onClick={handleMarkComplete}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md"
+          >
+            Mark Complete
+          </button>
+        )}
+        {post.complete && (
+          <div className="mt-4 text-green-500 font-bold">
+            Post is marked as complete.
+          </div>
+        )}
       {/* Comments Section */}
       <div className="mt-8">
           <h2 className="text-2xl font-bold mb-6">Comments ({post.comments?.length || 0})</h2>
           
-          {/* Comment Form */}
-          <form onSubmit={handleSubmitComment} className="mb-8">
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write a comment..."
-              className="w-full p-4 bg-gray-800 rounded-lg text-white placeholder-gray-400"
-              rows="3"
-            />
-            <button
-              type="submit"
-              className="mt-4 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium"
-            >
-              Post Comment
-            </button>
-          </form>
-
+          {/* Conditional rendering of comment form */}
+          {!post.complete ? (
+            <form onSubmit={handleSubmitComment} className="mb-8">
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write a comment..."
+                className="w-full p-4 bg-gray-800 rounded-lg text-white placeholder-gray-400"
+                rows="3"
+              />
+              <button
+                type="submit"
+                className="mt-4 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium"
+              >
+                Post Comment
+              </button>
+            </form>
+          ) : (
+            <div className="text-gray-400">Comments are disabled for this post.</div>
+          )}
+          
           {/* Comments List */}
           <div className="space-y-6">
             {post.comments?.map((comment, index) => (

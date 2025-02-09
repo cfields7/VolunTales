@@ -12,6 +12,7 @@ export default function ItemsAssistancePage() {
   const [filteredData, setFilteredData] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [filterStatus, setFilterStatus] = useState("open"); // "open", "completed", "all"
 
   useEffect(() => {
     async function fetchItemsData() {
@@ -31,15 +32,21 @@ export default function ItemsAssistancePage() {
     fetchItemsData();
   }, []);
 
-  // Filter the posts by selected tags
+  // Filter the posts by selected tags and post completion status
   useEffect(() => {
     const filteredPosts = itemsData.filter(post => {
-      if (selectedTags.length === 0) return true; // No tag selected, show all posts
-      return selectedTags.some(tag => tag.value === post.tag); // Filter by selected tag
+      const tagMatch =
+        selectedTags.length === 0 || selectedTags.some(tag => tag.value === post.tag);
+      const statusMatch =
+        filterStatus === "all" ||
+        (filterStatus === "open" && !post.complete) ||
+        (filterStatus === "completed" && post.complete);
+
+      return tagMatch && statusMatch;
     });
 
     setFilteredData(filteredPosts);
-  }, [selectedTags, itemsData]);
+  }, [selectedTags, filterStatus, itemsData]);
 
   return (
     <div>
@@ -56,7 +63,7 @@ export default function ItemsAssistancePage() {
         {/* Filters Section */}
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
           <div className="w-full">
-            <h3 className="text-black font-bold mb-2">Filter by Tags</h3>
+            <h3 className="text-white font-bold mb-2">Filter by Tags</h3>
             <Select
               isMulti
               options={tags}
@@ -65,6 +72,20 @@ export default function ItemsAssistancePage() {
               placeholder="Select Tags"
               className="bg-gray-700 text-black rounded-md"
             />
+          </div>
+
+          {/* Filter by Completion Status */}
+          <div className="mt-4">
+            <h3 className="text-white font-bold mb-2">Filter by Status</h3>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="bg-gray-700 text-white rounded-md p-2"
+            >
+              <option value="open">Open Posts</option>
+              <option value="completed">Completed Posts</option>
+              <option value="all">All Posts</option>
+            </select>
           </div>
         </div>
 
