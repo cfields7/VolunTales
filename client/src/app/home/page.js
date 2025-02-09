@@ -22,7 +22,7 @@ const HomePage = () => {
         <div className="flex justify-center gap-4 mb-12">
           <button 
             onClick={() => router.push('/request')}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium"
+            className="bg-blue-500 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium"
           >
             Request Assistance
           </button>
@@ -47,19 +47,19 @@ const HomePage = () => {
                 </a>
               </li>
               <li>
-                <a href="https://wwcm.org/volunteer/" className="text-blue-600 hover:underline block">
+                <a href="https://wwcm.org/volunteer/" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Western Wake Crisis Ministry</div>
                   <div className="text-sm text-gray-300">Food Pantry Services</div>
                 </a>
               </li>
               <li>
-                <a href="https://tableraleigh.org" className="text-blue-600 hover:underline block">
+                <a href="https://tableraleigh.org" className="text-blue-500 hover:underline block">
                   <div className="font-medium">A Place at the Table</div>
                   <div className="text-sm text-gray-300">Pay-what-you-can Cafe</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.wakemow.org/volunteer" className="text-blue-600 hover:underline block">
+                <a href="https://www.wakemow.org/volunteer" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Meals on Wheels</div>
                   <div className="text-sm text-gray-300">Senior Food Delivery</div>
                 </a>
@@ -72,19 +72,19 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4 text-white">Housing & Shelter</h2>
             <ul className="space-y-3">
               <li>
-                <a href="https://oakcitycares.org/" className="text-blue-600 hover:underline block">
+                <a href="https://oakcitycares.org/" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Oak City Cares</div>
                   <div className="text-sm text-gray-300">Housing for Homeless</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.familypromisetriangle.org/" className="text-blue-600 hover:underline block">
+                <a href="https://www.familypromisetriangle.org/" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Family Promise Triangle</div>
                   <div className="text-sm text-gray-300">Family Shelter Services</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.habitatwake.org/volunteer" className="text-blue-600 hover:underline block">
+                <a href="https://www.habitatwake.org/volunteer" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Habitat for Humanity</div>
                   <div className="text-sm text-gray-300">Housing Construction & Support</div>
                 </a>
@@ -97,19 +97,19 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4 text-white">Community Support</h2>
             <ul className="space-y-3">
               <li>
-                <a href="https://raleighnc.gov/parks-and-recreation/services/find-community-center" className="text-blue-600 hover:underline block">
+                <a href="https://raleighnc.gov/parks-and-recreation/services/find-community-center" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Raleigh Community Centers</div>
                   <div className="text-sm text-gray-300">Local Programs & Services</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.lgbtcenterofraleigh.com/volunteer" className="text-blue-600 hover:underline block">
+                <a href="https://www.lgbtcenterofraleigh.com/volunteer" className="text-blue-500 hover:underline block">
                   <div className="font-medium">LGBT Center of Raleigh</div>
                   <div className="text-sm text-gray-300">LGBTQ+ Support Services</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.wcwc.org/getinvolved" className="text-blue-600 hover:underline block">
+                <a href="https://www.wcwc.org/getinvolved" className="text-blue-500 hover:underline block">
                   <div className="font-medium">The Women's Center</div>
                   <div className="text-sm text-gray-300">Women's Support Services</div>
                 </a>
@@ -122,19 +122,19 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4 text-white">Government Services</h2>
             <ul className="space-y-3">
               <li>
-                <a href="https://www.wake.gov/departments-government/health-human-services/programs-assistance" className="text-blue-600 hover:underline block">
+                <a href="https://www.wake.gov/departments-government/health-human-services/programs-assistance" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Wake County Human Services</div>
                   <div className="text-sm text-gray-300">Programs & Assistance</div>
                 </a>
               </li>
               <li>
-                <a href="https://www.ncdhhs.gov/eipd" className="text-blue-600 hover:underline block">
+                <a href="https://www.ncdhhs.gov/eipd" className="text-blue-500 hover:underline block">
                   <div className="font-medium">NC DHHS</div>
                   <div className="text-sm text-gray-300">Disability Services</div>
                 </a>
               </li>
               <li>
-                <a href="https://gotriangle.org/access" className="text-blue-600 hover:underline block">
+                <a href="https://gotriangle.org/access" className="text-blue-500 hover:underline block">
                   <div className="font-medium">GoTriangle</div>
                   <div className="text-sm text-gray-300">Accessible Transportation</div>
                 </a>
@@ -147,7 +147,7 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4 text-white">Environmental</h2>
             <ul className="space-y-3">
               <li>
-                <a href="https://raleighcityfarm.org/volunteer" className="text-blue-600 hover:underline block">
+                <a href="https://raleighcityfarm.org/volunteer" className="text-blue-500 hover:underline block">
                   <div className="font-medium">Raleigh City Farm</div>
                   <div className="text-sm text-gray-300">Urban Farming Initiative</div>
                 </a>
