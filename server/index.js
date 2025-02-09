@@ -102,6 +102,21 @@ router.route('/users/current').get(verifyToken, async (req, res) => {
   }
 });
 
+// Edit currently logged in user information
+router.route('/users/current').put(verifyToken, async (req, res) => {
+  const userInput = req.body;
+  try {
+    const currentUser = await database.getUserByUsername(req.user.username);
+
+    userInput.id = currentUser.id;
+    const editedUser = await database.updateUser(userInput);
+    res.json(editedUser);
+  } catch (error) {
+    console.error('Error editing user:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Add new time request
 router.route('/requests/time').post(verifyToken, async (req, res) => {
   try {

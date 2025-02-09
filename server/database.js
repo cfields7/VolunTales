@@ -169,6 +169,30 @@ const addUser = (userData) => {
   });
 };
 
+const updateUser = (userData) => {
+  console.log("Updating user with data ", userData);
+  return new Promise((resolve, reject) => {
+    const { id, username, password, firstName, lastName, email, profileIcon } = userData;
+    if (id && username && password && firstName && lastName) {
+      db.run(
+        "UPDATE users SET username = ?, password = ?, firstName = ?, lastName = ?, email = ?, profileIcon = ? WHERE id = ?",
+        [username, password, firstName, lastName, email, profileIcon, id],
+        function(err) {
+          if (err) {
+            console.error('Error updating user: ', err);
+            reject(err);
+          } else {
+            const updatedUserData = getUser(id);
+            resolve(updatedUserData);
+          }
+        }
+      );
+    } else {
+      reject("Required field(s) not provided");
+    }
+  });
+};
+
 // Get a user by id
 const getUser = (id) => {
   console.log('Getting user with id ', id);
@@ -486,6 +510,7 @@ module.exports = {
   init,
   clean,
   addUser,
+  updateUser,
   getUser,
   getUserByUsername,
   getAllUsers,
