@@ -166,7 +166,7 @@ export default function RequestAid() {
               &times;
             </button>
             <h2 className="text-2xl font-bold text-white mb-4 text-center">
-              Submit Your Request
+              Submit Your Tale
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Link Field */}
@@ -183,7 +183,7 @@ export default function RequestAid() {
               
               {/* Title Field */}
               <div>
-                <label className="block text-white mb-2">Request Title</label>
+                <label className="block text-white mb-2">Short Title</label>
                 <input
                   type="text"
                   name="title"
@@ -194,7 +194,7 @@ export default function RequestAid() {
               
               {/* Description Field */}
               <div>
-                <label className="block text-white mb-2">Description</label>
+                <label className="block text-white mb-2">Tell Your Tale</label>
                 <textarea
                   name="body"
                   required
@@ -290,7 +290,7 @@ export default function RequestAid() {
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors"
               >
-                Submit Request
+                Submit Tale
               </button>
             </form>
           </div>
