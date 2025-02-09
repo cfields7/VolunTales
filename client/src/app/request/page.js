@@ -36,7 +36,7 @@ export default function RequestAid() {
 
     let payload = { link, title, body };
 
-    // For time assistance, add an array of objects (each with a start and end).
+    // send time request.
     if (selectedAidType === 'time') {
       payload.timeSlots = [];
       for (let i = 0; i < timeSlots.length; i++) {
@@ -44,14 +44,16 @@ export default function RequestAid() {
         const end = formData.get(`timeSlotEnd-${i}`);
         payload.timeSlots.push({ start, end });
       }
+      requestsService.requestTime(payload)
     }
 
-    // For financial assistance, include the goal.
+    // Send finance request.
     if (selectedAidType === 'money') {
       payload.goal = formData.get("goal");
+      requestsService.requestFinance(payload)
     }
 
-    // For items, include an array of objects (each with name and quantity).
+    // Send item request.
     if (selectedAidType === 'items') {
       payload.items = [];
       for (let i = 0; i < items.length; i++) {
@@ -59,16 +61,18 @@ export default function RequestAid() {
         const quantity = formData.get(`itemQuantity-${i}`);
         payload.items.push({ name, quantity });
       }
+      requestsService.requestTime(payload)
     }
 
     console.log(payload);
-    // You can now post the 'payload' object to your server.
 
-    // Optionally close the modal after submission.
+
+
+    //  close the modal (on success, to change)
     setIsModalOpen(false);
+    // also direct to new page with post after success?
   };
 
-  // Functions to add additional fields.
   const addTimeSlot = () => setTimeSlots([...timeSlots, '']);
   const addItem = () => setItems([...items, '']);
 
