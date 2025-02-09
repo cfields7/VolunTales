@@ -134,6 +134,18 @@ router.route('/requests/time/:id').get(verifyToken, async (req, res) => {
   try {
     const request = await database.getTimeRequest(req.params.id);
     if (request) {
+      let comments = await database.getCommentsByRequestTypeId("time", req.params.id);
+      console.log("Found comments in request: " + comments);
+      for (let comment of comments) {
+        const user = await database.getUser(comment.userId);
+        console.log("user to expand: " + JSON.stringify(user));
+        comment.firstName = user.firstName;
+        comment.lastName = user.lastName;
+        comment.username = user.username;
+        comment.profileIcon = user.profileIcon;
+        console.log("Comment with correct fields: " + JSON.stringify(comment));
+      }
+      request.comments = comments;
       res.json(request);
     } else {
       res.status(404).json({ error: "Time Request Not Found" });
@@ -176,6 +188,18 @@ router.route('/requests/finance/:id').get(verifyToken, async (req, res) => {
   try {
     const request = await database.getFinanceRequest(req.params.id);
     if (request) {
+      let comments = await database.getCommentsByRequestTypeId("finance", req.params.id);
+      console.log("Found comments in request: " + comments);
+      for (let comment of comments) {
+        const user = await database.getUser(comment.userId);
+        console.log("user to expand: " + JSON.stringify(user));
+        comment.firstName = user.firstName;
+        comment.lastName = user.lastName;
+        comment.username = user.username;
+        comment.profileIcon = user.profileIcon;
+        console.log("Comment with correct fields: " + JSON.stringify(comment));
+      }
+      request.comments = comments;
       res.json(request);
     } else {
       res.status(404).json({ error: "Finance Request Not Found" });
@@ -214,6 +238,18 @@ router.route('/requests/item/:id').get(verifyToken, async (req, res) => {
   try {
     const request = await database.getItemRequest(req.params.id);
     if (request) {
+      let comments = await database.getCommentsByRequestTypeId("item", req.params.id);
+      console.log("Found comments in request: " + comments);
+      for (let comment of comments) {
+        const user = await database.getUser(comment.userId);
+        console.log("user to expand: " + JSON.stringify(user));
+        comment.firstName = user.firstName;
+        comment.lastName = user.lastName;
+        comment.username = user.username;
+        comment.profileIcon = user.profileIcon;
+        console.log("Comment with correct fields: " + JSON.stringify(comment));
+      }
+      request.comments = comments;
       res.json(request);
     } else {
       res.status(404).json({ error: "Item Request Not Found" });
@@ -235,6 +271,20 @@ router.route('/requests/item').get(verifyToken, async (req, res) => {
     res.json(itemRequests);
   } catch (error) {
     console.error('Error getting all item requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Add new comment
+router.route('/comments/:type').post(verifyToken, async (req, res) => {
+  try {
+    const currentUser = await database.getUserByUsername(req.user.username);
+    // Add comment to database
+    const type = req.params.type;
+    const commentAdded = await database.addComment(type, currentUser.id, req.body);
+    res.json(commentAdded);
+  } catch (error) {
+    console.error('Error adding comment:', error);
     res.status(500).json({ error: error });
   }
 });
