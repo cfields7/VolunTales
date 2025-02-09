@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
 const menuItems = [
+  { name: "Home", path: "/home" },
   { name: "Volunteer", path: "/volunteer" },
   { name: "Request Aid", path: "/request" },
-  // { name: "Profile", path: "/profile" },
+  { name: "Profile", path: "/profile" },
   { name: "Sign Out", path: "/" },
 ];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter(); 
+
+  useEffect(() => {
+    // Check if the token exists in localStorage
+    const token = localStorage.getItem('token');
+    
+    // If no token, redirect to home page (or login page)
+    if (!token) {
+      router.push('/'); // Redirect to home page
+    }
+  }, [router]); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = () => {
+    // Clear token from local storage
+    localStorage.removeItem('token'); 
+    
+    router.push('/'); 
   };
 
   return (
@@ -41,15 +60,25 @@ const Header = () => {
               className="hidden lg:flex space-x-8"
             >
               {menuItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className={`text-gray-300 hover:text-white transition-colors ${
-                    pathname === item.path ? 'text-white' : ''
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                item.name === "Sign Out" ? (
+                  <button
+                    key={item.name}
+                    onClick={handleSignOut} 
+                    className={`text-gray-300 hover:text-white transition-colors`}
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.path}
+                    className={`text-gray-300 hover:text-white transition-colors ${
+                      pathname === item.path ? 'text-white' : ''
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
             </motion.div>
 
@@ -108,28 +137,44 @@ const Header = () => {
                     transition={{ delay: index * 0.1 }}
                     className="relative"
                   >
-                    <Link
-                      href={item.path}
-                      onClick={toggleMenu}
-                      className={`relative text-3xl font-medium transition-colors
-                        ${isActive 
-                          ? 'text-white' 
-                          : 'text-gray-400 hover:text-white'
-                        }
-                      `}
-                    >
-                      <span className="relative z-10">
-                        {item.name}
-                      </span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute -inset-x-4 -inset-y-2 border-2 border-white rounded-lg"
-                          initial={false}
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        />
-                      )}
-                    </Link>
+                    {item.name === "Sign Out" ? (
+                      <button
+                        onClick={handleSignOut}
+                        className={`relative text-3xl font-medium transition-colors
+                          ${isActive 
+                            ? 'text-white' 
+                            : 'text-gray-400 hover:text-white'
+                          }
+                        `}
+                      >
+                        <span className="relative z-10">
+                          {item.name}
+                        </span>
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.path}
+                        onClick={toggleMenu}
+                        className={`relative text-3xl font-medium transition-colors
+                          ${isActive 
+                            ? 'text-white' 
+                            : 'text-gray-400 hover:text-white'
+                          }
+                        `}
+                      >
+                        <span className="relative z-10">
+                          {item.name}
+                        </span>
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeTab"
+                            className="absolute -inset-x-4 -inset-y-2 border-2 border-white rounded-lg"
+                            initial={false}
+                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          />
+                        )}
+                      </Link>
+                    )}
                   </motion.div>
                 );
               })}

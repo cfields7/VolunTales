@@ -17,6 +17,24 @@ app.use('/api', router);
 // Initialize Database
 database.init();
 
+// JWT Token Verification Middleware
+const verifyToken = (req, res, next) => {
+  // Get token from "Bearer <token>"
+  const token = req.header('Authorization')?.split(' ')[1];
+
+  if (!token) {
+    return res.status(403).json({ message: 'No token provided' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Invalid or expired token' });
+    }
+    req.user = decoded; // Add decoded data to request
+    next();
+  });
+};
+
 // ROUTES //
 
 // Add new user
@@ -49,9 +67,10 @@ router.route('/login').post(async (req, res) => {
       dbUser = await database.getUserByUsername(loginUser.username);
     }
     if (dbUser && loginUser.password && dbUser.password == loginUser.password) {
-      res.json({
-        success: true
-      });
+      const username = loginUser.username;
+      const payload = { username };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ token });
     } else {
       res.status(500).json({ error: "Invalid login information" });
     }
@@ -62,7 +81,7 @@ router.route('/login').post(async (req, res) => {
 });
 
 // Get all users
-router.route('/users').get(async (req, res) => {
+router.route('/users').get(verifyToken, async (req, res) => {
   try {
     const users = await database.getAllUsers();
     res.json(users)
@@ -73,7 +92,7 @@ router.route('/users').get(async (req, res) => {
 });
 
 // Add new time request
-router.route('/requests/time').post(async (req, res) => {
+router.route('/requests/time').post(verifyToken, async (req, res) => {
   try {
     // Add time request to database
     const timeRequestAdded = await database.addTimeRequest(req.body);
@@ -84,8 +103,23 @@ router.route('/requests/time').post(async (req, res) => {
   }
 });
 
+// Get time request by id
+router.route('/requests/time/:id').get(verifyToken, async (req, res) => {
+  try {
+    const request = await database.getTimeRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Time Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting time request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Get all time requests
-router.route('/requests/time').get(async (req, res) => {
+router.route('/requests/time').get(verifyToken, async (req, res) => {
   try {
     const timeRequests = await database.getAllTimeRequests();
     for (const timeRequest of timeRequests) {
@@ -100,7 +134,7 @@ router.route('/requests/time').get(async (req, res) => {
 });
 
 // Add new finance request
-router.route('/requests/finance').post(async (req, res) => {
+router.route('/requests/finance').post(verifyToken, async (req, res) => {
   try {
     // Add finance request to database
     const financeRequestAdded = await database.addFinanceRequest(req.body);
@@ -111,8 +145,23 @@ router.route('/requests/finance').post(async (req, res) => {
   }
 });
 
+// Get finance request by id
+router.route('/requests/finance/:id').get(verifyToken, async (req, res) => {
+  try {
+    const request = await database.getFinanceRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Finance Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting finance request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Get all finance requests
-router.route('/requests/finance').get(async (req, res) => {
+router.route('/requests/finance').get(verifyToken, async (req, res) => {
   try {
     const financeRequests = await database.getAllFinanceRequests();
     res.json(financeRequests)
@@ -123,7 +172,7 @@ router.route('/requests/finance').get(async (req, res) => {
 });
 
 // Add new item request
-router.route('/requests/item').post(async (req, res) => {
+router.route('/requests/item').post(verifyToken, async (req, res) => {
   try {
     // Add item request to database
     const itemRequestAdded = await database.addItemRequest(req.body);
@@ -134,8 +183,23 @@ router.route('/requests/item').post(async (req, res) => {
   }
 });
 
+// Get item request by id
+router.route('/requests/item/:id').get(verifyToken, async (req, res) => {
+  try {
+    const request = await database.getItemRequest(req.params.id);
+    if (request) {
+      res.json(request);
+    } else {
+      res.status(404).json({ error: "Item Request Not Found" });
+    }
+  } catch (error) {
+    console.error(`Error getting item request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
 // Get all item requests
-router.route('/requests/item').get(async (req, res) => {
+router.route('/requests/item').get(verifyToken, async (req, res) => {
   try {
     const itemRequests = await database.getAllItemRequests();
     for (const itemRequest of itemRequests) {

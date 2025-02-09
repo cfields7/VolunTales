@@ -6,7 +6,8 @@ export const volunteerService = {
     const res = await fetch(serverPath + '/requests/time', {
       method: "GET",
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
@@ -17,7 +18,8 @@ export const volunteerService = {
     const res = await fetch(serverPath + '/requests/finance', {
       method: "GET",
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
 
@@ -28,7 +30,8 @@ export const volunteerService = {
     const res = await fetch(serverPath + '/requests/item', {
       method: "GET",
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
     return Promise.resolve(res);
@@ -38,7 +41,8 @@ export const volunteerService = {
     const res = await fetch(serverPath + `/requests/${service}/${postId}`, {
         method: "GET",
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+          "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
       });
 

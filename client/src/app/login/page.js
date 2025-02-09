@@ -16,15 +16,21 @@ export default function LoginPage() {
         setIsFormValid(username && password);
       }, [username, password]);
     
-  const handleSubmit = () => {
+  const handleSubmit = (username, password) => {
     if (username && password) {
       userService.loginUser(username, password).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
-          router.push('/volunteer'); // change later
+          
+          return response.json()
         } else {
           alert("Invalid Credentials")
         }
+      })
+      .then(data => {
+          console.log("token: " + data.token)
+          localStorage.setItem("token", data.token);
+          router.push('/home');
       });
     }
   };
@@ -80,7 +86,7 @@ export default function LoginPage() {
             </button>
             {!responseGet &&     <button
               type="button"
-              onClick={() => handleSubmit()}
+              onClick={() => handleSubmit(username, password)}
               disabled={!isFormValid}
               className={`px-4 py-2 rounded-md transition-colors ${
                 isFormValid ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-gray-500 text-gray-300 cursor-not-allowed'

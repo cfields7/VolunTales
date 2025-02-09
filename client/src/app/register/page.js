@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { userService } from '../services/userService';
 import Background from '../components/background';
+import LoginPage from '../login/page';
 
 export default function PostPage() {
   const router = useRouter();
@@ -25,7 +26,17 @@ export default function PostPage() {
       userService.addUser(firstName, lastName, username, password, email).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
-          router.push('/volunteer'); // change later
+          if (username && password) {
+            userService.loginUser(username, password).then(response => {
+              if (response.ok) {
+                setResponseGet("Post Success");
+                localStorage.setItem("token", response.token);
+                router.push('/home'); 
+              } else {
+                alert("Invalid Credentials")
+              }
+            });
+          }
         } else {
           alert("Error: Username Already Exists.");
         }

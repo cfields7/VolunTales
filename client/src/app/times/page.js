@@ -5,15 +5,15 @@ import Link from "next/link";
 import { volunteerService } from "../services/volunteerService";
 import Header from "../components/header";
 import Background from "../components/background";
-import Select from "react-select"; // Use a multi-select component for tags
+import Select from "react-select"; // Multi-select component for tags
 import DatePicker from "react-datepicker"; // Date range picker
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function TimeAssistancePage() {
   const [timeData, setTimeData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState([]); // Holds all available tags
+  const [selectedTags, setSelectedTags] = useState([]); // Tracks selected tags for filtering
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -26,8 +26,7 @@ export default function TimeAssistancePage() {
         setTimeData(data);
         setFilteredData(data);
 
-        // Extract unique tags from the fetched data
-        const allTags = Array.from(new Set(data.flatMap(post => post.tags || [])));
+        const allTags = Array.from(new Set(data.flatMap(post => post.tag || [])));
         setTags(allTags.map(tag => ({ label: tag, value: tag })));
       } catch (error) {
         console.error("Error fetching time data:", error);
@@ -36,12 +35,11 @@ export default function TimeAssistancePage() {
     fetchTimeData();
   }, []);
 
-  // Filter the posts by selected tags and date range
+  // Filter posts by selected tags and date range
   useEffect(() => {
     const filteredPosts = timeData.filter(post => {
-      const matchesTags =
-        selectedTags.length === 0 ||
-        (post.tags && post.tags.some(tag => selectedTags.includes(tag)));
+      if (selectedTags.length === 0) return true; 
+      const matchesTags = selectedTags.some(tag => tag.value === post.tag);
 
       const matchesDateRange =
         (!startDate || new Date(post.timeSlots[0].start) >= startDate) &&
@@ -52,6 +50,10 @@ export default function TimeAssistancePage() {
 
     setFilteredData(filteredPosts);
   }, [selectedTags, startDate, endDate, timeData]);
+
+  const handleTagChange = (selectedOptions) => {
+    setSelectedTags(selectedOptions ? selectedOptions.map(option => option.value) : []);
+  };
 
   const formatDateTime = (dateTimeStr) => {
     const options = {
@@ -85,12 +87,11 @@ export default function TimeAssistancePage() {
               <h3 className="text-white font-bold mb-2">Filter by Tags</h3>
               <Select
                 isMulti
-                options={tags}
-                value={selectedTags.map(tag => ({ label: tag, value: tag }))}
-                onChange={(selectedOptions) => {
-                  setSelectedTags(selectedOptions.map(option => option.value));
-                }}
-                placeholder="Select tags"
+                value={tags.filter(tag => selectedTags.includes(tag.value))} // Display selected tags
+                onChange={handleTagChange}
+                options={tags} 
+                className="text-black"
+                placeholder="Select Tags"
               />
             </div>
 
