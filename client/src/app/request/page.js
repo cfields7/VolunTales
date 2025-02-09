@@ -34,7 +34,7 @@ export default function RequestAid() {
     }
   };
 
-  // Form submission – build a nested payload based on the selected aid type.
+  // Form submission 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
