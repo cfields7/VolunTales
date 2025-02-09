@@ -1,6 +1,6 @@
 const serverPath = "https://cfhc.fly.dev/api";
 
-export const requestsService = {
+export const volunteerService = {
 
   async getTime() {
     const res = await fetch(serverPath + '/get/time', {

@@ -8,7 +8,6 @@ export default function Volunteer() {
     <div>
       <Header />
       <Background />
-      
         <br />
         <br />
         <br />
@@ -31,8 +30,10 @@ export default function Volunteer() {
             {/* Right Section - Stacked smaller boxes */}
             <div className="space-y-6">
               {/* Volunteer Time Option */}
-              <Link legacyBehavior href="https://cfhc.cfields7.com">
-                <a className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+              <Link
+                href="/times"
+                className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
+              >
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
                     <div>
@@ -40,12 +41,13 @@ export default function Volunteer() {
                       <p className="text-sm">Whether you want to (or not?)</p>
                     </div>
                   </div>
-                </a>
               </Link>
 
               {/* Financial Aid Option */}
-              <Link legacyBehavior href="https://cfhc.cfields7.com">
-                <a className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+              <Link
+  href="/finance"
+  className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
+>
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
                     <div>
@@ -53,12 +55,14 @@ export default function Volunteer() {
                       <p className="text-sm">Donate money to the group or organization of your choice.</p>
                     </div>
                   </div>
-                </a>
+               
               </Link>
 
               {/* Goods Donation Option */}
-              <Link legacyBehavior href="https://cfhc.cfields7.com">
-                <a className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all">
+              <Link
+  href="/items"
+  className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
+>
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">📦</div>
                     <div>
@@ -66,7 +70,7 @@ export default function Volunteer() {
                       <p className="text-sm">Search for specific items (dry goods, clothing, etc.) needed in your location.</p>
                     </div>
                   </div>
-                </a>
+              
               </Link>
             </div>
           </div>
