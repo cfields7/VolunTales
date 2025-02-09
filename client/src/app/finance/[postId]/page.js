@@ -124,7 +124,7 @@ export default function FullPostPage() {
               <div key={index} className="flex items-start gap-4 bg-gray-800 p-4 rounded-lg">
                 {/* Profile Icon */}
                 <img
-                  src={`/icon-${comment.profileIcon || '1'}.png`}
+                  src={`/icon-${comment.profileIcon || '0'}.png`}
                   alt="Profile icon"
                   className="w-10 h-10 rounded-full"
                 />
