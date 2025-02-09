@@ -68,6 +68,23 @@ const init = () => {
       console.log("timeSlots table created or already exists");
     }
   });
+
+  // Create a "financeRequests" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS financeRequests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
+      body TEXT,
+      link TEXT,
+      goal TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating finalRequests table:", err);
+    } else {
+      console.log("financeRequests table created or already exists");
+    }
+  });
 }
 
 // Add a new user
@@ -183,9 +200,9 @@ const addTimeRequest = (timeRequestData) => {
   });
 };
 
-// Get a request by id
+// Get a time request by id
 const getTimeRequest = (id) => {
-  console.log('Getting request with id ', id);
+  console.log('Getting time request with id ', id);
   return new Promise((resolve, reject) => {
     db.get('SELECT * FROM timeRequests WHERE id = ?', [id], (err, timeRequest) => {
       if (err) {
@@ -247,6 +264,63 @@ const getTimeSlotsByRequest = (id) => {
   });
 };
 
+// Add a new finance request
+const addFinanceRequest = (financeRequestData) => {
+  console.log("Adding finance request with data ", financeRequestData);
+  return new Promise((resolve, reject) => {
+    const { title, body, link, goal } = financeRequestData;
+    if (title && body && link && goal) {
+      db.run(
+        "INSERT INTO financeRequests (title, body, link, goal) VALUES (?, ?, ?, ?)",
+        [title, body, link, goal],
+        function(err) {
+          if (err) {
+            console.error('Error inserting financeRequest: ', err);
+            reject(err);
+          } else {
+            const addedRequestData = getFinanceRequest(this.lastID);
+            resolve(addedRequestData);
+          }
+        }
+      );
+    } else {
+      reject("Required field(s) not provided");
+    }
+  });
+};
+
+// Get a finance request by id
+const getFinanceRequest = (id) => {
+  console.log('Getting finance request with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM financeRequests WHERE id = ?', [id], (err, financeRequest) => {
+      if (err) {
+        console.error('Error getting finance request by id:', err);
+        reject(err);
+      } else {
+        console.log('Found finance request:', financeRequest);
+        resolve(financeRequest);
+      }
+    });
+  });
+};
+
+// Get a finance by id
+const getAllFinanceRequests = () => {
+  console.log('Getting all finance requests');
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM financeRequests', (err, financeRequests) => {
+      if (err) {
+        console.error('Error getting all finance requests:', err);
+        reject(err);
+      } else {
+        console.log('Found finance requests: ', financeRequests);
+        resolve(financeRequests);
+      }
+    });
+  });
+};
+
 module.exports = {
   init,
   addUser,
@@ -257,5 +331,8 @@ module.exports = {
   getTimeRequest,
   getAllTimeRequests,
   getTimeSlot,
-  getTimeSlotsByRequest
+  getTimeSlotsByRequest,
+  addFinanceRequest,
+  getFinanceRequest,
+  getAllFinanceRequests
 };
