@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -7,12 +7,23 @@ import { Menu, X } from 'lucide-react';
 const menuItems = [
   { name: "Volunteer", path: "/volunteer" },
   { name: "Request Aid", path: "/request" },
+  { name: "Sign Out", path: "/" },
 ];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+  const router = useRouter(); 
+
+  useEffect(() => {
+    // Check if the token exists in localStorage
+    const token = localStorage.getItem('token');
+    
+    // If no token, redirect to home page (or login page)
+    if (!token) {
+      router.push('/'); // Redirect to home page
+    }
+  }, [router]); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,6 +32,7 @@ const Header = () => {
   const handleSignOut = () => {
     // Clear token from local storage
     localStorage.removeItem('token'); 
+    
     router.push('/'); 
   };
 
@@ -49,7 +61,7 @@ const Header = () => {
                 item.name === "Sign Out" ? (
                   <button
                     key={item.name}
-                    onClick={handleSignOut} // Use handleSignOut for Sign Out action
+                    onClick={handleSignOut} 
                     className={`text-gray-300 hover:text-white transition-colors`}
                   >
                     {item.name}
