@@ -40,7 +40,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="fixed w-full z-40 bg-gradient-to-br from-gray-800 to-gray-900 backdrop-blur-md">
+      <nav className="fixed w-full z-40 bg-gradient-to-br from-gray-800 to-green-900 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <motion.div
@@ -49,8 +49,13 @@ const Header = () => {
               className="text-white font-bold text-xl"
             >
               <Link href="/">
-                <span className="block lg:inline">VolunTales</span>
-              </Link>
+              <span className="block lg:inline">
+                <img src="/dragon-icon.png" alt="Dragon Icon" className="inline-block mr-2" style={{ width: '2em', height: '2em' }} />
+                VolunTales
+              </span>
+            </Link>
+
+
             </motion.div>
 
             {/* Desktop Menu */}

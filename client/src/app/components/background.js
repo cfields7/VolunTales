@@ -8,7 +8,7 @@ const Background = () => {
     const gradientClasses = [
       // "bg-gradient-to-b from-green-700 via-yellow-600 to-orange-900",
       // "bg-gradient-to-b from-indigo-700 via-violet-600 to-gray-900",
-      "bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950",
+      "bg-gradient-to-br from-green-950 via-gray-900 to-indigo-950",
       // "bg-gradient-to-br from-indigo-200 via-gray-300 to-indigo-300",
       // "bg-gradient-to-b from-pink-700 via-red-600 to-red-900",
       // "bg-gradient-to-b from-teal-400 via-cyan-500 to-blue-600",  
