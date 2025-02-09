@@ -1,6 +1,7 @@
 "use client";
 import Header from '../components/header';
 import { useState } from 'react';
+import { requestsService } from "../services/requestsService";
 import Background from '../components/background';
 
 // Utility to create a unique ID.
@@ -50,12 +51,12 @@ export default function RequestAid() {
         start: formData.get(`timeSlotStart-${slot.id}`),
         end: formData.get(`timeSlotEnd-${slot.id}`)
       }));
-      // Example: requestsService.requestTime(payload)
+      requestsService.requestTime(payload)
     }
 
     if (selectedAidType === 'money') {
       payload.goal = formData.get("goal");
-      // Example: requestsService.requestFinance(payload)
+      requestsService.requestFinance(payload)
     }
 
     if (selectedAidType === 'items') {
@@ -63,7 +64,7 @@ export default function RequestAid() {
         name: formData.get(`item-${item.id}`),
         quantity: formData.get(`itemQuantity-${item.id}`)
       }));
-      // Example: requestsService.requestTime(payload)
+      requestsService.requestTime(payload)
     }
 
     console.log(payload);

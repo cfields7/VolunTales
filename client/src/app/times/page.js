@@ -13,6 +13,7 @@ export default function TimeAssistancePage() {
       try {
         const res = await volunteerService.getTime();
         const data = await res.json();
+        console.log(data);
         setTimeData(data);
       } catch (error) {
         console.error("Error fetching time data:", error);
