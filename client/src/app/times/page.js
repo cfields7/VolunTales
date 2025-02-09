@@ -26,7 +26,7 @@ export default function TimeAssistancePage() {
         setTimeData(data);
         setFilteredData(data);
 
-        const allTags = Array.from(new Set(data.flatMap(post => post.tags || [])));
+        const allTags = Array.from(new Set(data.flatMap(post => post.tag || [])));
         setTags(allTags.map(tag => ({ label: tag, value: tag })));
       } catch (error) {
         console.error("Error fetching time data:", error);
@@ -40,7 +40,7 @@ export default function TimeAssistancePage() {
     const filteredPosts = timeData.filter(post => {
       const matchesTags =
         selectedTags.length === 0 ||
-        (post.tags && post.tags.some(tag => selectedTags.includes(tag)));
+        (post.tag && post.tag.some(tag => selectedTags.includes(tag)));
 
       const matchesDateRange =
         (!startDate || new Date(post.timeSlots[0].start) >= startDate) &&
@@ -90,7 +90,7 @@ export default function TimeAssistancePage() {
                 isMulti
                 value={tags.filter(tag => selectedTags.includes(tag.value))} // Display selected tags
                 onChange={handleTagChange}
-                options={tags} // All available tags
+                options={tags} 
                 className="text-black"
                 placeholder="Select Tags"
               />

@@ -22,7 +22,7 @@ export default function FinanceAssistancePage() {
         setFilteredData(data);
 
         // Extract unique tags from the fetched data
-        const allTags = Array.from(new Set(data.flatMap(post => post.tags || [])));
+        const allTags = Array.from(new Set(data.flatMap(post => post.tag || [])));
         setTags(allTags.map(tag => ({ label: tag, value: tag })));
       } catch (error) {
         console.error("Error fetching finance data:", error);
@@ -36,7 +36,7 @@ export default function FinanceAssistancePage() {
     const filteredPosts = financeData.filter(post => {
       const matchesTags =
         selectedTags.length === 0 ||
-        (post.tags && post.tags.some(tag => selectedTags.includes(tag.value)));
+        (post.tag && post.tag.some(tag => selectedTags.includes(tag.value)));
 
       return matchesTags;
     });
@@ -66,7 +66,7 @@ export default function FinanceAssistancePage() {
               value={selectedTags}
               onChange={setSelectedTags}
               placeholder="Select Tags"
-              className="bg-gray-700 text-white rounded-md"
+              className="bg-gray-700 text-black rounded-md"
             />
           </div>
         </div>

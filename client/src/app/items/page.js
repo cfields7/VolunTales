@@ -22,7 +22,7 @@ export default function ItemsAssistancePage() {
         setFilteredData(data);
 
         // Extract unique tags from the fetched data
-        const allTags = Array.from(new Set(data.flatMap(post => post.tags || [])));
+        const allTags = Array.from(new Set(data.flatMap(post => post.tag || [])));
         setTags(allTags.map(tag => ({ label: tag, value: tag })));
       } catch (error) {
         console.error("Error fetching items data:", error);
@@ -36,7 +36,7 @@ export default function ItemsAssistancePage() {
     const filteredPosts = itemsData.filter(post => {
       const matchesTags =
         selectedTags.length === 0 ||
-        (post.tags && post.tags.some(tag => selectedTags.includes(tag.value)));
+        (post.tag && post.tag.some(tag => selectedTags.includes(tag.value)));
 
       return matchesTags;
     });
@@ -59,14 +59,14 @@ export default function ItemsAssistancePage() {
         {/* Filters Section */}
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
           <div className="w-full">
-            <h3 className="text-white font-bold mb-2">Filter by Tags</h3>
+            <h3 className="text-black font-bold mb-2">Filter by Tags</h3>
             <Select
               isMulti
               options={tags}
               value={selectedTags}
               onChange={setSelectedTags}
               placeholder="Select Tags"
-              className="bg-gray-700 text-white rounded-md"
+              className="bg-gray-700 text-black rounded-md"
             />
           </div>
         </div>
