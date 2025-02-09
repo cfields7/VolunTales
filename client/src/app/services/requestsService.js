@@ -9,6 +9,7 @@ export const requestsService = {
         title: payload.title,
         body: payload.body,
         link: payload.link,
+        tag: payload.tag,
         timeSlots: payload.timeSlots,
       }),
       headers: {
@@ -26,6 +27,7 @@ export const requestsService = {
         title: payload.title,
         body: payload.body,
         link: payload.link,
+        tag: payload.tag,
         goal: payload.goal,
       }),
       headers: {
@@ -43,6 +45,7 @@ export const requestsService = {
         title: payload.title,
         body: payload.body,
         link: payload.link,
+        tag: payload.tag,
         items: payload.items,
       }),
       headers: {

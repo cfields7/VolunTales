@@ -43,6 +43,7 @@ export default function RequestAid() {
     const link = formData.get("link");
     const title = formData.get("title");
     const body = formData.get("body");
+    const tag = formData.get("tag");
 
     let payload = { link, title, body };
 
@@ -287,7 +288,37 @@ export default function RequestAid() {
                   </button>
                 </div>
               )}
-
+              {/* Tag Dropdown */}
+              <div>
+                <label className="block text-white mb-2">Tag your post</label>
+                <select
+                  name="tag"
+                  className="w-full bg-gray-700 text-white p-2 rounded"
+                  required
+                >
+                  {selectedAidType === 'time' && (
+                    <>
+                      <option value="volunteer">Volunteer</option>
+                      <option value="community support">Community Support</option>
+                      <option value="education">Education</option>
+                    </>
+                  )}
+                  {selectedAidType === 'money' && (
+                    <>
+                      <option value="fundraising">Fundraising</option>
+                      <option value="charity">Charity</option>
+                      <option value="emergency assistance">Emergency Assistance</option>
+                    </>
+                  )}
+                  {selectedAidType === 'items' && (
+                    <>
+                      <option value="donation">Donation</option>
+                      <option value="supplies">Supplies</option>
+                      <option value="equipment">Equipment</option>
+                    </>
+                  )}
+                </select>
+              </div>
               <button
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors"
