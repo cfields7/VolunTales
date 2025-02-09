@@ -31,7 +31,7 @@ const Header = () => {
               className="text-white font-bold text-xl"
             >
               <Link href="/">
-                <span className="block lg:inline">CFHC</span>
+                <span className="block lg:inline">VolunTales</span>
               </Link>
             </motion.div>
 

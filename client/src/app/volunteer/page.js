@@ -25,7 +25,6 @@ export default function Volunteer() {
               </p>
             </div>
 
-
             {/* Right Section - Stacked smaller boxes */}
             <div className="space-y-6">
               {/* Volunteer Time Option */}
