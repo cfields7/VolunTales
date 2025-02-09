@@ -142,9 +142,20 @@ router.route('/requests/item').get(async (req, res) => {
       itemRequest.items = await database.getItemsByRequest(itemRequest.id);
       console.log("items: " + JSON.stringify(itemRequest.items));
     }
-    res.json(itemRequests)
+    res.json(itemRequests);
   } catch (error) {
     console.error('Error getting all item requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Clean the database
+router.route('/clean').post(async (req, res) => {
+  try {
+    database.clean();
+    res.json({ success: "true" });
+  } catch (error) {
+    console.error('Error cleaning database:', error);
     res.status(500).json({ error: error });
   }
 });

@@ -119,6 +119,26 @@ const init = () => {
   });
 }
 
+const clean = () => {
+  db.all("SELECT name FROM sqlite_master WHERE type='table';", (err, tables) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    tables.forEach(table => {
+      const tableName = table.name;
+      db.run(`DELETE FROM ${tableName};`, function (err) {
+        if (err) {
+          console.error(`Error deleting data from ${tableName}:`, err);
+        } else {
+          console.log(`Deleted all data from ${tableName}`);
+        }
+      });
+    });
+  });
+}
+
 // Add a new user
 const addUser = (userData) => {
   console.log("Adding user with data ", userData);
@@ -459,6 +479,7 @@ const getItemsByRequest = (id) => {
 
 module.exports = {
   init,
+  clean,
   addUser,
   getUser,
   getUserByUsername,
