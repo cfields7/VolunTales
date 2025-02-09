@@ -72,6 +72,33 @@ router.route('/users').get(async (req, res) => {
   }
 });
 
+// Add new time request
+router.route('/requests/time').post(async (req, res) => {
+  try {
+    // Add time request to database
+    const timeRequestAdded = await database.addTimeRequest(req.body);
+    res.json(timeRequestAdded);
+  } catch (error) {
+    console.error('Error adding time request:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Get all time requests
+router.route('/requests/time').get(async (req, res) => {
+  try {
+    const timeRequests = await database.getAllTimeRequests();
+    for (const timeRequest of timeRequests) {
+      timeRequest.timeSlots = await database.getTimeSlotsByRequest(timeRequest.id);
+      console.log("timeSlots: " + JSON.stringify(timeRequest.timeSlots));
+    }
+    res.json(timeRequests)
+  } catch (error) {
+    console.error('Error getting all time requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
 //////////
 
 // Serve the app
