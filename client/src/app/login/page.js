@@ -21,11 +21,16 @@ export default function LoginPage() {
       userService.loginUser(username, password).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
-          localStorage.setItem("token", response.token);
-          router.push('/home'); // change later
+          
+          return response.json()
         } else {
           alert("Invalid Credentials")
         }
+      })
+      .then(data => {
+          console.log("token: " + data.token)
+          localStorage.setItem("token", data.token);
+          router.push('/home');
       });
     }
   };

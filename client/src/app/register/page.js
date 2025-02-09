@@ -26,7 +26,17 @@ export default function PostPage() {
       userService.addUser(firstName, lastName, username, password, email).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
-          LoginPage.handleSubmit(username, password);
+          if (username && password) {
+            userService.loginUser(username, password).then(response => {
+              if (response.ok) {
+                setResponseGet("Post Success");
+                localStorage.setItem("token", response.token);
+                router.push('/home'); 
+              } else {
+                alert("Invalid Credentials")
+              }
+            });
+          }
         } else {
           alert("Error: Username Already Exists.");
         }
