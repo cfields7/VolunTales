@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { userService } from '../services/userService';
 import Background from '../components/background';
 
-export default function PostPage() {
+export default function LoginPage() {
   const router = useRouter();
     const [responseGet, setResponseGet] = useState(null);
     const [username, setUsername] = useState("");
