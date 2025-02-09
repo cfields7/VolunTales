@@ -96,18 +96,13 @@ export default function FullPostPage() {
       <div className="max-w-4xl mx-auto py-12 text-white">
         <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
         <p className="mb-6">{post.body}</p>
-        {post.timeSlots && post.timeSlots.length > 0 && (
-          <div className="mb-6">
-            {post.timeSlots.map((slot, i) => (
-              <div key={i} className="flex items-center mb-1">
-                <span className="font-bold">Start:</span>
-                <span className="ml-2">{formatDateTime(slot.start)}</span>
-                <span className="font-bold ml-4">End:</span>
-                <span className="ml-2">{formatDateTime(slot.end)}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {post.items &&
+                post.items.map((item, i) => (
+                  <div key={i} className="mt-2">
+                    <span className="font-bold">Item:</span> {item.name}{" "}
+                    <span className="font-bold">Quantity:</span> {item.quantity}
+                  </div>
+                ))}
         {post.link && (
           <a
             href={post.link}
