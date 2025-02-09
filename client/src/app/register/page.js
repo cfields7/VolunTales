@@ -14,6 +14,7 @@ export default function PostPage() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const [profileIcon, setProfileIcon] = useState("1");
 
   // Check if all required fields are filled
   useEffect(() => {
@@ -23,26 +24,30 @@ export default function PostPage() {
   const handleSubmit = () => {
     if (isFormValid) {
 
-      userService.addUser(firstName, lastName, username, password, email).then(response => {
+      userService.addUser(firstName, lastName, username, password, email, ).then(response => {
         if (response.ok) {
           setResponseGet("Post Success");
           if (username && password) {
             userService.loginUser(username, password).then(response => {
               if (response.ok) {
                 setResponseGet("Post Success");
-                localStorage.setItem("token", response.token);
-                router.push('/home'); 
+                
+                return response.json()
               } else {
                 alert("Invalid Credentials")
               }
+            })
+            .then(data => {
+                console.log("token: " + data.token)
+                localStorage.setItem("token", data.token);
+                router.push('/home');
             });
           }
-        } else {
-          alert("Error: Username Already Exists.");
         }
-      });
-      
-
+      else {
+        alert("Error: Username Already Exists.");
+      }
+    });
     }
   };
 
@@ -56,33 +61,63 @@ export default function PostPage() {
 
         <form onSubmit={handleSubmit} className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-lg shadow-md p-6 space-y-6">
           <div className="space-y-4">
-            {/* First Name */}
+            {/* Profile Icons */}
             <div>
               <label className="block text-sm font-medium text-white mb-1">
-                First Name <span className="text-red-500">*</span>
+                Select Profile Icon <span className="text-red-500">*</span>
               </label>
-              <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-red-900 focus:border-red-500 bg-indigo-950 text-white"
-                placeholder="Enter first name"
-              />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                {['1', '2', '3', '4'].map((id) => (
+                  <div
+                    key={id}
+                    onClick={() => setProfileIcon(id)}
+                    className={`cursor-pointer p-4 rounded-lg border-2 ${
+                      profileIcon === id ? 'border-red-500' : 'border-gray-600'
+                    }`}
+                  >
+                    <div className="w-full aspect-square rounded overflow-hidden">
+                      <img 
+                        src={`/icon-${id}.png`}
+                        alt={`Profile Icon ${id}`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Name Fields */}
+            <div className="flex space-x-4">
+              {/* First Name */}
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-white mb-1">
+                  First Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-red-900 focus:border-red-500 bg-indigo-950 text-white"
+                  placeholder="Enter first name"
+                />
+              </div>
+
+              {/* Last Name */}
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-white mb-1">
+                  Last Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
+                  placeholder="Enter last name"
+                />
+              </div>
             </div>
 
-            {/* Last Name */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Last Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-500 bg-indigo-950 text-white"
-                placeholder="Enter last name"
-              />
-            </div>
 
             {/* Username */}
             <div>

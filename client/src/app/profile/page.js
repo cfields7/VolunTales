@@ -18,14 +18,18 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const loadUserData = async () => {
-      try {
-        const data = await profileService.getUserData();
+      
+        profileService.getUserData().then(response => {
+            return response.json()
+        })
+        
+        .then(data => {
+        console.log(data)
         setUserData(data);
-      } catch (error) {
-        setMessage('Error loading profile data');
-      } finally {
         setIsLoading(false);
-      }
+     
+    });
+      
     };
     loadUserData();
   }, []);
