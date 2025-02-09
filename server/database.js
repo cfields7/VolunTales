@@ -89,7 +89,7 @@ const init = () => {
     }
   });
 
-  // Create a "itemRequests" table, if it does not exist
+  // Create an "itemRequests" table, if it does not exist
   db.run(`
     CREATE TABLE IF NOT EXISTS itemRequests (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -106,7 +106,7 @@ const init = () => {
     }
   });
 
-  // Create a "items" table, if it does not exist
+  // Create an "items" table, if it does not exist
   db.run(`
     CREATE TABLE IF NOT EXISTS items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -119,6 +119,24 @@ const init = () => {
       console.error("Error creating items table:", err);
     } else {
       console.log("items table created or already exists");
+    }
+  });
+
+  // Create a "comments" table, if it does not exist
+  db.run(`
+    CREATE TABLE IF NOT EXISTS comments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      type TEXT,
+      requestId INTEGER,
+      userId INTEGER,
+      message TEXT,
+      datePosted TEXT
+    )
+  `, (err) => {
+    if (err) {
+      console.error("Error creating comments table:", err);
+    } else {
+      console.log("comments table created or already exists");
     }
   });
 }
@@ -506,6 +524,63 @@ const getItemsByRequest = (id) => {
   });
 };
 
+// Add a new comment
+const addComment = (type, userId, commentData) => {
+  console.log(`Adding ${type} comment with data `, commentData);
+  return new Promise((resolve, reject) => {
+    const { requestId, message, datePosted } = commentData;
+    if (type && requestId && userId && message && datePosted) {
+      db.run(
+        "INSERT INTO comments (type, requestId, userId, message, datePosted) VALUES (?, ?, ?, ?, ?)",
+        [type, requestId, userId, message, datePosted],
+        function(err) {
+          if (err) {
+            console.error('Error inserting comments: ', err);
+            reject(err);
+          } else {
+            const addedCommentData = getComment(this.lastID);
+            resolve(addedCommentData);
+          }
+        }
+      );
+    } else {
+      reject("Required field(s) not provided");
+    }
+  });
+};
+
+// Get comment by id
+const getComment = (id) => {
+  console.log('Getting comment with id ', id);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM comments WHERE id = ?', [id], (err, comment) => {
+      if (err) {
+        console.error('Error getting comment by id:', err);
+        reject(err);
+      } else {
+        console.log('Found comment:', comment);
+        resolve(comment);
+      }
+    });
+  });
+};
+
+// Get comments by request id
+const getCommentsByRequestTypeId = (type, requestId) => {
+  console.log(`Getting comments with ${type} request id  ${requestId}`);
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM comments WHERE type = ? AND requestId = ?', [type, requestId], (err, comment) => {
+      if (err) {
+        console.error('Error getting comment by requestId:', err);
+        reject(err);
+      } else {
+        console.log('Found comment:', comment);
+        resolve(comment);
+      }
+    });
+  });
+};
+
 module.exports = {
   init,
   clean,
@@ -526,5 +601,8 @@ module.exports = {
   getItemRequest,
   getAllItemRequests,
   getItem,
-  getItemsByRequest
+  getItemsByRequest,
+  addComment,
+  getComment,
+  getCommentsByRequestTypeId
 };
