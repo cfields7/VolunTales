@@ -120,8 +120,9 @@ router.route('/users/current').put(verifyToken, async (req, res) => {
 // Add new time request
 router.route('/requests/time').post(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     // Add time request to database
-    const timeRequestAdded = await database.addTimeRequest(req.body);
+    const timeRequestAdded = await database.addTimeRequest(currentUser.id, req.body);
     res.json(timeRequestAdded);
   } catch (error) {
     console.error('Error adding time request:', error);
@@ -132,6 +133,7 @@ router.route('/requests/time').post(verifyToken, async (req, res) => {
 // Get time request by id
 router.route('/requests/time/:id').get(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     const request = await database.getTimeRequest(req.params.id);
     if (request) {
       let comments = await database.getCommentsByRequestTypeId("time", req.params.id);
@@ -146,12 +148,30 @@ router.route('/requests/time/:id').get(verifyToken, async (req, res) => {
         console.log("Comment with correct fields: " + JSON.stringify(comment));
       }
       request.comments = comments;
+      request.owner = (currentUser.id == request.owner);
       res.json(request);
     } else {
       res.status(404).json({ error: "Time Request Not Found" });
     }
   } catch (error) {
     console.error(`Error getting time request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Mark time request completed
+router.route('/requests/time/:id/complete').put(verifyToken, async (req, res) => {
+  try {
+    const currentUser = await database.getUserByUsername(req.user.username);
+    const request = await database.getTimeRequest(req.params.id);
+    if (currentUser.id == request.owner) {
+      const completedRequest = await database.markTimeRequestCompleted(req.params.id);
+      res.json(completedRequest);
+    } else {
+      res.status(403).json({ error: "Current user does not have permission to complete this request" });
+    }
+  } catch (error) {
+    console.error('Error editing user:', error);
     res.status(500).json({ error: error });
   }
 });
@@ -174,8 +194,9 @@ router.route('/requests/time').get(verifyToken, async (req, res) => {
 // Add new finance request
 router.route('/requests/finance').post(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     // Add finance request to database
-    const financeRequestAdded = await database.addFinanceRequest(req.body);
+    const financeRequestAdded = await database.addFinanceRequest(currentUser.id, req.body);
     res.json(financeRequestAdded);
   } catch (error) {
     console.error('Error adding finance request:', error);
@@ -186,6 +207,7 @@ router.route('/requests/finance').post(verifyToken, async (req, res) => {
 // Get finance request by id
 router.route('/requests/finance/:id').get(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     const request = await database.getFinanceRequest(req.params.id);
     if (request) {
       let comments = await database.getCommentsByRequestTypeId("finance", req.params.id);
@@ -200,12 +222,30 @@ router.route('/requests/finance/:id').get(verifyToken, async (req, res) => {
         console.log("Comment with correct fields: " + JSON.stringify(comment));
       }
       request.comments = comments;
+      request.owner = (currentUser.id == request.owner);
       res.json(request);
     } else {
       res.status(404).json({ error: "Finance Request Not Found" });
     }
   } catch (error) {
     console.error(`Error getting finance request ${req.params.id}:`, error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Mark finance request completed
+router.route('/requests/finance/:id/complete').put(verifyToken, async (req, res) => {
+  try {
+    const currentUser = await database.getUserByUsername(req.user.username);
+    const request = await database.getFinanceRequest(req.params.id);
+    if (currentUser.id == request.owner) {
+      const completedRequest = await database.markFinanceRequestCompleted(req.params.id);
+      res.json(completedRequest);
+    } else {
+      res.status(403).json({ error: "Current user does not have permission to complete this request" });
+    }
+  } catch (error) {
+    console.error('Error editing user:', error);
     res.status(500).json({ error: error });
   }
 });
@@ -224,8 +264,9 @@ router.route('/requests/finance').get(verifyToken, async (req, res) => {
 // Add new item request
 router.route('/requests/item').post(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     // Add item request to database
-    const itemRequestAdded = await database.addItemRequest(req.body);
+    const itemRequestAdded = await database.addItemRequest(currentUser.id, req.body);
     res.json(itemRequestAdded);
   } catch (error) {
     console.error('Error adding item request:', error);
@@ -236,6 +277,7 @@ router.route('/requests/item').post(verifyToken, async (req, res) => {
 // Get item request by id
 router.route('/requests/item/:id').get(verifyToken, async (req, res) => {
   try {
+    const currentUser = await database.getUserByUsername(req.user.username);
     const request = await database.getItemRequest(req.params.id);
     if (request) {
       let comments = await database.getCommentsByRequestTypeId("item", req.params.id);
@@ -250,6 +292,7 @@ router.route('/requests/item/:id').get(verifyToken, async (req, res) => {
         console.log("Comment with correct fields: " + JSON.stringify(comment));
       }
       request.comments = comments;
+      request.owner = (currentUser.id == request.owner);
       res.json(request);
     } else {
       res.status(404).json({ error: "Item Request Not Found" });
@@ -271,6 +314,23 @@ router.route('/requests/item').get(verifyToken, async (req, res) => {
     res.json(itemRequests);
   } catch (error) {
     console.error('Error getting all item requests:', error);
+    res.status(500).json({ error: error });
+  }
+});
+
+// Mark item request completed
+router.route('/requests/item/:id/complete').put(verifyToken, async (req, res) => {
+  try {
+    const currentUser = await database.getUserByUsername(req.user.username);
+    const request = await database.getItemRequest(req.params.id);
+    if (currentUser.id == request.owner) {
+      const completedRequest = await database.markItemRequestCompleted(req.params.id);
+      res.json(completedRequest);
+    } else {
+      res.status(403).json({ error: "Current user does not have permission to complete this request" });
+    }
+  } catch (error) {
+    console.error('Error editing user:', error);
     res.status(500).json({ error: error });
   }
 });
