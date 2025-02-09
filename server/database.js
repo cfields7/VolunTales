@@ -58,6 +58,8 @@ const addUser = (userData) => {
           }
         }
       );
+    } else {
+      reject("Required field(s) not provided");
     }
   });
 };
@@ -69,6 +71,22 @@ const getUser = (id) => {
     db.get('SELECT * FROM users WHERE id = ?', [id], (err, user) => {
       if (err) {
         console.error('Error getting user by id:', err);
+        reject(err);
+      } else {
+        console.log('Found user:', user);
+        resolve(user);
+      }
+    });
+  });
+};
+
+// Get a user by username
+const getUserByUsername = (username) => {
+  console.log('Getting user with username ', username);
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM users WHERE username = ?', [username], (err, user) => {
+      if (err) {
+        console.error('Error getting user by username:', err);
         reject(err);
       } else {
         console.log('Found user:', user);
@@ -98,5 +116,6 @@ module.exports = {
   init,
   addUser,
   getUser,
+  getUserByUsername,
   getAllUsers
 };

@@ -7,19 +7,23 @@ export const userService = {
     return Promise.resolve(res.json());
   },
 
-  async addUser(firstName, lastName) {
+  async addUser(firstName, lastName, username, password, admin, email) {
     const res = await fetch(serverPath + '/users', {
       method: "POST",
       body: JSON.stringify({
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        username: username,
+        password: password,
+        admin: admin,
+        email: email
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
     });
 
-    return Promise.resolve(res.json());
+    return Promise.resolve(res);
   },
 
   async loginUser(username, password) {
@@ -34,7 +38,7 @@ export const userService = {
       }
     });
 
-    return Promise.resolve(res.json());
+    return Promise.resolve(res);
   }
 
 }
