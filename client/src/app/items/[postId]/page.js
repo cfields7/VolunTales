@@ -127,7 +127,7 @@ export default function FullPostPage() {
             Mark Complete
           </button>
         )}
-        {post.completed && (
+        {post.completed==1 && (
           <div className="text-gray-400">This post has been marked completed.</div>
         )}
       {/* Comments Section */}
