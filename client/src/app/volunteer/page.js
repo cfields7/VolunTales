@@ -35,7 +35,7 @@ export default function Volunteer() {
                 className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
               >
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
+                    <div className="p-5 w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">🕒</div>
                     <div>
                       <h3 className="text-xl font-semibold">Contribute Your Time</h3>
                       <p className="text-sm">Invest your time in the community by volunteering with local charities and causes. Your effoerts can help to build a stronger, united community</p>
@@ -49,7 +49,7 @@ export default function Volunteer() {
   className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
 >
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
+                    <div className="p-5 w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">💵</div>
                     <div>
                       <h3 className="text-xl font-semibold">Fund a Cause</h3>
                       <p className="text-sm">Donate money to support groups or organizations.Your contributions help to sponsor essential programs and create lasting change in the community.</p>
@@ -64,7 +64,7 @@ export default function Volunteer() {
   className="block bg-gray-700 p-6 rounded-xl shadow-lg text-white hover:bg-gray-600 transition-all"
 >
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">📦</div>
+                    <div className="p-5 w-10 h-10 bg-gray-600 rounded-full flex justify-center items-center text-lg">📦</div>
                     <div>
                       <h3 className="text-xl font-semibold">Donate Goods and Supplies</h3>
                       <p className="text-sm">Find and contribute specific items(dry goods, clothing, canned food, etc), urgently needed in your community. You can make a difference!</p>
